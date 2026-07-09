@@ -1,0 +1,598 @@
+<!-- CPS — Cocoa Pack Service · 使い方ガイド (single-file site) -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CPS — Cocoa Pack Service · User Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --espresso:#241813;      /* base */
+    --panel:#2f211a;
+    --panel-2:#392a21;
+    --line:#4a382d;
+    --line-soft:#3a2a21;
+    --cream:#f2e8d8;         /* text */
+    --foam:#ecd9be;          /* headings */
+    --caramel:#d69b4a;       /* warm accent */
+    --caramel-deep:#a5722f;
+    --sage:#8fc0ad;          /* cold accent */
+    --sage-deep:#4f8571;
+    --mute:#a58d78;
+    --focus:#d69b4a;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--espresso); color:var(--cream);
+    font-family:"Zen Kaku Gothic New",system-ui,sans-serif;
+    font-size:16px; line-height:1.8; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--caramel); text-decoration:none}
+  a:hover{text-decoration:underline}
+  ::selection{background:var(--caramel); color:var(--espresso)}
+  :focus-visible{outline:2px solid var(--focus); outline-offset:3px; border-radius:3px}
+  .wrap{max-width:1000px; margin:0 auto; padding:0 24px}
+  .mono{font-family:"IBM Plex Mono",monospace}
+
+  /* ---- top bar ---- */
+  header.bar{position:sticky; top:0; z-index:30; background:rgba(36,24,19,.85); backdrop-filter:blur(8px); border-bottom:1px solid var(--line-soft)}
+  .bar .wrap{display:flex; align-items:center; justify-content:space-between; height:60px}
+  .brand{display:flex; align-items:baseline; gap:11px}
+  .brand .logo{font-family:"Zen Maru Gothic",sans-serif; font-weight:900; font-size:1.35rem; color:var(--foam); letter-spacing:.04em}
+  .brand .tag{font-size:.72rem; color:var(--mute)}
+  .bar nav{display:flex; gap:20px; font-size:.86rem}
+  .bar nav a{color:var(--mute)}
+  .bar nav a:hover{color:var(--cream); text-decoration:none}
+  @media(max-width:760px){ .bar nav{display:none} .brand .tag{display:none} }
+
+  /* ---- hero ---- */
+  .hero{position:relative; padding:88px 0 64px; overflow:hidden; border-bottom:1px solid var(--line-soft)}
+  .hero::after{content:""; position:absolute; right:-160px; top:-160px; width:460px; height:460px; border-radius:50%; background:radial-gradient(circle, rgba(214,155,74,.14), transparent 70%); pointer-events:none}
+  .eyebrow{font-family:"IBM Plex Mono",monospace; font-size:.76rem; letter-spacing:.24em; text-transform:uppercase; color:var(--caramel); margin:0 0 22px}
+  h1{font-family:"Zen Maru Gothic",sans-serif; font-weight:900; font-size:clamp(2.4rem,6.4vw,4.2rem); line-height:1.08; letter-spacing:.01em; margin:0 0 22px; color:var(--foam)}
+  h1 .cup{color:var(--caramel)}
+  .lede{font-size:1.1rem; color:#d8cbb8; max-width:54ch; margin:0 0 30px}
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap; align-items:center}
+  .btn{font-family:"Zen Kaku Gothic New",sans-serif; font-size:.95rem; font-weight:700; padding:12px 22px; border-radius:999px; border:1.5px solid var(--line); cursor:pointer; background:transparent; color:var(--cream); transition:.15s; display:inline-block}
+  .btn:hover{border-color:var(--caramel); color:var(--caramel); text-decoration:none}
+  .btn.primary{background:var(--caramel); color:var(--espresso); border-color:var(--caramel)}
+  .btn.primary:hover{background:#e6ad5d; color:var(--espresso)}
+  .free-chip{font-size:.8rem; color:var(--mute)}
+
+  /* steam */
+  .steam{position:absolute; left:50%; bottom:0; transform:translateX(-50%); display:flex; gap:20px; opacity:.5; pointer-events:none}
+  .steam i{width:5px; height:52px; border-radius:3px; background:linear-gradient(to top, transparent, var(--caramel)); display:block; animation:rise 3.4s ease-in-out infinite}
+  .steam i:nth-child(2){animation-delay:.5s; height:70px}
+  .steam i:nth-child(3){animation-delay:1s}
+  @keyframes rise{0%,100%{transform:translateY(6px) scaleY(.9); opacity:.25}50%{transform:translateY(-6px) scaleY(1.05); opacity:.6}}
+
+  /* ---- section base ---- */
+  section{padding:66px 0; border-bottom:1px solid var(--line-soft)}
+  .sec-label{font-family:"IBM Plex Mono",monospace; font-size:.74rem; letter-spacing:.2em; text-transform:uppercase; color:var(--caramel); margin:0 0 14px}
+  h2{font-family:"Zen Maru Gothic",sans-serif; font-weight:700; font-size:clamp(1.7rem,3.6vw,2.4rem); margin:0 0 10px; color:var(--foam); line-height:1.2}
+  h2 + .sub{color:var(--mute); margin:0 0 36px; max-width:62ch}
+
+  /* ---- MENU (signature) ---- */
+  .menu-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px}
+  @media(max-width:720px){ .menu-grid{grid-template-columns:1fr} }
+  .drink{position:relative; background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:22px 22px 20px; transition:transform .18s, border-color .18s}
+  .drink:hover{transform:translateY(-3px); border-color:var(--caramel-deep)}
+  .drink.cold:hover{border-color:var(--sage-deep)}
+  .drink-top{display:flex; align-items:flex-start; justify-content:space-between; gap:14px}
+  .drink .dn{font-family:"Zen Maru Gothic",sans-serif; font-weight:700; font-size:1.22rem; color:var(--foam); margin:0}
+  .drink .temp{font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.1em; padding:3px 9px; border-radius:999px; white-space:nowrap}
+  .drink.warm .temp{color:var(--caramel); border:1px solid var(--caramel-deep)}
+  .drink.cold .temp{color:var(--sage); border:1px solid var(--sage-deep)}
+  .drink .desc{font-size:.92rem; color:#d3c6b3; margin:10px 0 16px}
+  .koku{display:flex; align-items:center; gap:9px; margin-bottom:14px}
+  .koku .kl{font-size:.72rem; color:var(--mute); font-family:"IBM Plex Mono",monospace}
+  .cups{display:flex; gap:4px}
+  .cups b{width:15px; height:15px; border-radius:50% 50% 50% 50% / 60% 60% 40% 40%; background:var(--line); display:inline-block}
+  .drink.warm .cups b.on{background:var(--caramel)}
+  .drink.cold .cups b.on{background:var(--sage)}
+  .chips{display:flex; flex-wrap:wrap; gap:7px}
+  .chip{font-size:.72rem; font-family:"IBM Plex Mono",monospace; color:var(--mute); background:var(--panel-2); border:1px solid var(--line-soft); border-radius:6px; padding:3px 9px}
+  .chip.grade{color:var(--foam); border-color:var(--caramel-deep)}
+  .menu-note{margin-top:22px; font-size:.85rem; color:var(--mute)}
+
+  /* ---- grades ---- */
+  .grades{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+  @media(max-width:820px){ .grades{grid-template-columns:1fr} }
+  .grade{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:24px; display:flex; flex-direction:column}
+  .grade.pro{border-color:var(--caramel-deep); background:linear-gradient(180deg,rgba(214,155,74,.07),transparent)}
+  .grade .gname{font-family:"Zen Maru Gothic",sans-serif; font-weight:700; font-size:1.3rem; color:var(--foam)}
+  .grade .gprice{font-family:"IBM Plex Mono",monospace; font-size:.82rem; color:var(--caramel); margin:2px 0 16px}
+  .grade ul{list-style:none; padding:0; margin:0 0 18px; flex:1}
+  .grade li{font-size:.9rem; padding:6px 0 6px 24px; position:relative; color:#d3c6b3}
+  .grade li::before{content:"◍"; position:absolute; left:0; color:var(--sage)}
+  .grade li.no{color:var(--mute)}
+  .grade li.no::before{content:"○"; color:var(--line)}
+  .grade .gfoot{font-size:.76rem; color:var(--mute); font-family:"IBM Plex Mono",monospace; border-top:1px solid var(--line-soft); padding-top:12px}
+
+  /* ---- steps ---- */
+  .steps{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+  @media(max-width:720px){ .steps{grid-template-columns:1fr} }
+  .flow{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:24px}
+  .flow h3{font-family:"Zen Maru Gothic",sans-serif; font-weight:700; font-size:1.15rem; color:var(--foam); margin:0 0 16px}
+  .flow ol{margin:0; padding-left:20px}
+  .flow li{margin:0 0 10px; color:#d3c6b3; font-size:.94rem}
+  .flow li b{color:var(--cream)}
+
+  /* ---- CPSV rugged ---- */
+  .rugged{display:grid; grid-template-columns:1.1fr .9fr; gap:32px; align-items:center}
+  @media(max-width:760px){ .rugged{grid-template-columns:1fr} }
+  .jar{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:26px}
+  .jar .frames{display:flex; gap:5px; margin-bottom:18px}
+  .jar .fr{flex:1; height:44px; border-radius:5px; background:var(--panel-2); border:1px solid var(--line-soft); display:flex; align-items:center; justify-content:center; font-family:"IBM Plex Mono",monospace; font-size:.62rem; color:var(--mute)}
+  .jar .fr.broken{background:#3a2530; border-color:var(--caramel-deep); color:var(--caramel)}
+  .jar .fr.healed{background:rgba(143,192,173,.14); border-color:var(--sage-deep); color:var(--sage)}
+  .jar .cap{font-size:.86rem; color:var(--mute)}
+  .jar button{margin-top:8px}
+
+  /* ---- friendkey ---- */
+  .pair{display:flex; align-items:center; gap:0; overflow-x:auto; padding-bottom:6px}
+  .pnode{min-width:150px; flex:1; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:18px}
+  .pnode + .pnode{margin-left:34px; position:relative}
+  .pnode + .pnode::before{content:"→"; position:absolute; left:-26px; top:50%; transform:translateY(-50%); color:var(--caramel); font-size:1.1rem}
+  .pnode .who{font-family:"IBM Plex Mono",monospace; font-size:.68rem; color:var(--caramel); letter-spacing:.1em; margin-bottom:6px}
+  .pnode .act{font-weight:700; color:var(--foam); font-size:.98rem; margin-bottom:6px}
+  .pnode .det{font-size:.82rem; color:var(--mute)}
+  .pnode .files{margin-top:10px; display:flex; gap:6px; flex-wrap:wrap}
+  .modes-h{font-family:"Zen Maru Gothic",sans-serif; font-weight:700; font-size:1.1rem; color:var(--foam); margin:34px 0 16px}
+  .modes{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+  @media(max-width:720px){ .modes{grid-template-columns:1fr} }
+  .mode{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:20px}
+  .mode.key{border-color:var(--caramel-deep); background:linear-gradient(180deg,rgba(214,155,74,.06),transparent)}
+  .mode .mn{font-family:"Zen Maru Gothic",sans-serif; font-weight:700; font-size:1.05rem; color:var(--foam); display:flex; align-items:baseline; gap:9px; margin-bottom:8px}
+  .mode .mx{font-family:"IBM Plex Mono",monospace; font-size:.74rem; color:var(--caramel)}
+  .mode p{margin:0; font-size:.88rem; color:#d3c6b3}
+  .mode.key p b{color:var(--cream)}
+
+  /* ---- start / code ---- */
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:20px}
+  @media(max-width:760px){ .two{grid-template-columns:1fr} }
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:24px}
+  .card h3{font-family:"Zen Maru Gothic",sans-serif; font-weight:700; font-size:1.15rem; color:var(--foam); margin:0 0 8px}
+  .card p{color:#d3c6b3; font-size:.92rem; margin:0 0 16px}
+  pre{background:#1b120d; border:1px solid var(--line); border-radius:9px; padding:16px 18px; overflow-x:auto; margin:0}
+  code{font-family:"IBM Plex Mono",monospace; font-size:.84rem; color:#e2d6c3}
+  .cmt{color:#8a7259}
+  .tok{color:var(--caramel)}
+
+  /* ---- file types ---- */
+  ul.ftypes{list-style:none; padding:0; margin:0}
+  ul.ftypes li{display:flex; gap:16px; align-items:baseline; padding:11px 0; border-bottom:1px solid var(--line-soft); font-size:.93rem}
+  ul.ftypes li:last-child{border-bottom:0}
+  ul.ftypes .ext{font-family:"IBM Plex Mono",monospace; color:var(--caramel); min-width:92px; font-weight:500}
+  ul.ftypes .fd{color:#d3c6b3}
+
+  .note{background:var(--panel-2); border:1px solid var(--line); border-left:3px solid var(--caramel); border-radius:0 10px 10px 0; padding:16px 20px; font-size:.9rem; color:#d3c6b3; margin-top:26px}
+  .note b{color:var(--cream)}
+
+  /* ---- operation guide ---- */
+  .tabflow{display:flex; flex-direction:column; gap:14px}
+  .op{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:20px 22px}
+  .op h3{font-family:"Zen Maru Gothic",sans-serif; font-weight:700; font-size:1.08rem; color:var(--foam); margin:0 0 4px; display:flex; align-items:baseline; gap:10px}
+  .op h3 .gtag{font-family:"IBM Plex Mono",monospace; font-size:.64rem; letter-spacing:.08em; color:var(--caramel); border:1px solid var(--caramel-deep); border-radius:5px; padding:2px 7px}
+  .op ol{margin:10px 0 0; padding-left:22px}
+  .op li{font-size:.92rem; color:#d3c6b3; margin-bottom:7px}
+  .op li b{color:var(--cream)}
+  .shot{margin-top:14px; border:1.5px dashed var(--line); border-radius:9px; background:var(--panel-2); min-height:120px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:6px; color:var(--mute); font-size:.8rem; padding:18px}
+  .shot .cam{font-size:1.3rem; opacity:.6}
+  .shot img{max-width:100%; border-radius:7px; display:block}
+  footer{padding:44px 0 60px; color:var(--mute); font-size:.84rem}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px}
+</style>
+
+<header class="bar">
+  <div class="wrap">
+    <div class="brand">
+      <span class="logo">CPS</span>
+      <span class="tag">Cocoa Pack Service</span>
+    </div>
+    <nav>
+      <a href="#menu">Menu</a>
+      <a href="#grades">Editions</a>
+      <a href="#use">Basics</a>
+      <a href="#howto">How-To</a>
+      <a href="#jar">Rugged Pack</a>
+      <a href="#pair">Pairs</a>
+      <a href="#start">Get CPS</a>
+      <a href="index.html" style="color:var(--caramel); border:1px solid var(--caramel-deep); border-radius:5px; padding:2px 9px">日本語</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Native Windows / zstd / error correction</p>
+      <h1>A café that packs<br>your data <span class="cup">by the cup</span>.</h1>
+      <p class="lede">
+        CPS is a Windows app that compresses files as if pouring them into drinks.
+        From a no-fuss cup to a rich, dictionary-brewed one — with rugged bottling that survives damage,
+        and pair dictionaries you grow with a friend.
+      </p>
+      <div class="cta-row">
+        <a class="btn primary" href="#start">Get the free Preview</a>
+        <a class="btn" href="#menu">See the menu</a>
+        <span class="free-chip">Preview is free · on the Microsoft Store</span>
+      </div>
+    </div>
+    <div class="steam" aria-hidden="true"><i></i><i></i><i></i></div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu">
+    <div class="wrap">
+      <p class="sec-label">Menu</p>
+      <h2>Five ways to pack</h2>
+      <p class="sub">
+        Every cup works the same way: pick a file → pick a drink → pack. Drinks that need recipes
+        must be installed first from the Recipe Shelf. "Body" is a feel for compression strength — actual results depend on your data.
+      </p>
+
+      <div class="menu-grid">
+        <div class="drink cold">
+          <div class="drink-top"><p class="dn">Water</p><span class="temp">COLD · fastest</span></div>
+          <p class="desc">The plainest cup — no dictionary at all. When speed matters most.</p>
+          <div class="koku"><span class="kl">body</span>
+            <span class="cups"><b class="on"></b><b></b><b></b><b></b><b></b></span></div>
+          <div class="chips"><span class="chip">no dictionary</span><span class="chip">folders OK</span><span class="chip grade">all editions</span></div>
+        </div>
+        <div class="drink cold">
+          <div class="drink-top"><p class="dn">Ice Cocoa</p><span class="temp">COLD · built-in dicts</span></div>
+          <p class="desc">Pick one of six bundled dictionaries — Japanese, English, technical text and more.</p>
+          <div class="koku"><span class="kl">body</span>
+            <span class="cups"><b class="on"></b><b class="on"></b><b></b><b></b><b></b></span></div>
+          <div class="chips"><span class="chip">6 built-in dicts</span><span class="chip">folders OK</span><span class="chip grade">all editions</span></div>
+        </div>
+        <div class="drink warm">
+          <div class="drink-top"><p class="dn">Hot Cocoa</p><span class="temp">HOT · layers</span></div>
+          <p class="desc">A richer cup using installed layer dictionaries. Strong on similar, repetitive data.</p>
+          <div class="koku"><span class="kl">body</span>
+            <span class="cups"><b class="on"></b><b class="on"></b><b class="on"></b><b></b><b></b></span></div>
+          <div class="chips"><span class="chip">needs layers</span><span class="chip">folders OK</span><span class="chip grade">Standard+</span></div>
+        </div>
+        <div class="drink warm">
+          <div class="drink-top"><p class="dn">Coffee</p><span class="temp">HOT · structure</span></div>
+          <p class="desc">Packs with a recipe that has learned the shape of your lines — great for logs and ledgers.</p>
+          <div class="koku"><span class="kl">body</span>
+            <span class="cups"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span></div>
+          <div class="chips"><span class="chip">needs a recipe</span><span class="chip">single file only</span><span class="chip grade">Standard+</span></div>
+        </div>
+        <div class="drink cold" style="grid-column:1 / -1">
+          <div class="drink-top"><p class="dn">Shake</p><span class="temp">COLD · multi-layer</span></div>
+          <p class="desc">The richest cup — multi-layer recipes that replace long runs of data. Drinking (packing) needs Standard; brewing (creating) needs Pro.</p>
+          <div class="koku"><span class="kl">body</span>
+            <span class="cups"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span></div>
+          <div class="chips"><span class="chip">multi-layer</span><span class="chip">folders OK</span><span class="chip grade">drink: STD+ / brew: Pro</span></div>
+        </div>
+      </div>
+      <p class="menu-note">Inside every pack: layer substitution → zstd → RS container. Unpacking auto-detects the method, so files open even if renamed.</p>
+    </div>
+  </section>
+
+  <!-- GRADES -->
+  <section id="grades">
+    <div class="wrap">
+      <p class="sec-label">Editions</p>
+      <h2>Openers, users, makers</h2>
+      <p class="sub">Editions differ in what they can do — and not just by policy: higher-tier features simply do not exist in lower-tier binaries.</p>
+      <div class="grades">
+        <div class="grade">
+          <div class="gname">Preview</div>
+          <div class="gprice">Free · on the Store now</div>
+          <ul>
+            <li>Pack with Water / Ice Cocoa</li>
+            <li>Open any <span class="mono">.cps</span>, whatever the method</li>
+            <li>Rugged pack (CPSV bottling)</li>
+            <li>Import pair generations and open pair packs</li>
+            <li class="no">Pack with layer dictionaries</li>
+            <li class="no">Create recipes or keys</li>
+          </ul>
+          <div class="gfoot">3 tabs: Compress / Unpack / Pairs · 1.5 GiB limit incl. contents</div>
+        </div>
+        <div class="grade">
+          <div class="gname">Standard</div>
+          <div class="gprice">For users &amp; receivers</div>
+          <ul>
+            <li>Pack with Hot Cocoa / Coffee (layers &amp; recipes)</li>
+            <li>Drink Shake too</li>
+            <li>Manage layers (.cpsdict) on the Recipe Shelf</li>
+            <li>Pack &amp; send with pair dictionaries</li>
+            <li class="no">Brew or grow pair dictionaries</li>
+          </ul>
+          <div class="gfoot">5 tabs: Compress / Unpack / Recipe Shelf / Receive / Pairs</div>
+        </div>
+        <div class="grade pro">
+          <div class="gname">Pro</div>
+          <div class="gprice">For makers &amp; growers</div>
+          <ul>
+            <li>Brew dictionaries, recipes and layers in the Workshop</li>
+            <li>Create pairs, grow and share generation dictionaries</li>
+            <li>Friend Key packs and self-contained recipe packs (.cprp)</li>
+            <li>Everything in Standard</li>
+            <li>Optional LLM-assisted dictionary building (BYOK)</li>
+          </ul>
+          <div class="gfoot">6 tabs: Workshop / Compress / Friend Key / Recipe Pack / Unpack / Pairs</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- USE -->
+  <section id="use">
+    <div class="wrap">
+      <p class="sec-label">Basics</p>
+      <h2>Pack it, open it</h2>
+      <p class="sub">Two moves cover most days. They feel the same in every edition.</p>
+      <div class="steps">
+        <div class="flow">
+          <h3>☕ Pack (compress)</h3>
+          <ol>
+            <li>On the <b>Compress</b> tab, pick a file (drag &amp; drop works)</li>
+            <li>Choose a <b>drink</b> from the menu (Water / Ice Cocoa / …)</li>
+            <li>Press <b>Pack</b></li>
+            <li>Choose where to save — done (<span class="mono">.cps</span>)</li>
+          </ol>
+        </div>
+        <div class="flow">
+          <h3>🫗 Open (unpack)</h3>
+          <ol>
+            <li>On the <b>Unpack</b> tab, pick a <span class="mono">.cps</span> / <span class="mono">.cpsv</span></li>
+            <li>Press <b>Unpack</b></li>
+            <li>The method is <b>auto-detected</b> — your original file comes back</li>
+            <li>Damaged parts are repaired with <b>RS error correction</b> when possible</li>
+          </ol>
+        </div>
+      </div>
+      <div class="note">
+        <b>Before using Hot Cocoa / Coffee:</b> install a <span class="mono">.cpsdict</span> via
+        <b>Recipe Shelf → Add recipe</b>. Layers are stored under <span class="mono">%APPDATA%\cps\layers</span>.
+      </div>
+    </div>
+  </section>
+
+  <!-- HOWTO -->
+  <section id="howto">
+    <div class="wrap">
+      <p class="sec-label">How-To</p>
+      <h2>Step by step, tab by tab</h2>
+      <p class="sub">Following the sidebar. Preview has Compress / Unpack / Pairs; Standard adds Recipe Shelf and Receive; Pro adds Workshop, Friend Key and Recipe Pack.</p>
+      <div class="tabflow">
+
+        <div class="op">
+          <h3>Compress <span class="gtag">all editions</span></h3>
+          <ol>
+            <li><b>Pick a file</b> — Browse, or drag &amp; drop onto the window (folders too).</li>
+            <li><b>Pick a drink</b> — from the tabs at the top. Ice Cocoa picks a built-in dictionary; Hot Cocoa / Coffee / Shake pick an installed recipe.</li>
+            <li>For precious data, tick <b>Rugged pack (CPSV)</b> — a frame container protected by RS.</li>
+            <li>Press <b>Pack</b>, choose a destination, and you get a <span class="mono">.cps</span> (or <span class="mono">.cpsv</span>).</li>
+          </ol>
+          <div class="shot"><span class="cam">📷</span>Screenshot: Compress tab with method tabs and a file selected</div>
+        </div>
+
+        <div class="op">
+          <h3>Unpack <span class="gtag">all editions</span></h3>
+          <ol>
+            <li>Pick a <span class="mono">.cps</span> / <span class="mono">.cpsv</span> (drop works).</li>
+            <li>Press <b>Unpack</b> — the method is auto-detected, even if the file was renamed.</li>
+            <li>Rugged packs attempt RS repair when parts are missing or corrupted.</li>
+          </ol>
+          <div class="shot"><span class="cam">📷</span>Screenshot: Unpack tab with a completed log</div>
+        </div>
+
+        <div class="op">
+          <h3>Recipe Shelf <span class="gtag">Standard / Pro</span></h3>
+          <ol>
+            <li><b>Add recipe</b> and choose a <span class="mono">.cpsdict</span> to install (stored in <span class="mono">%APPDATA%\cps\layers</span>).</li>
+            <li>The list shows what's installed — it feeds the sub-selection for Hot Cocoa / Coffee / Shake.</li>
+            <li>Standard ships with <span class="mono">sample_layers\</span> (four Japanese part-of-speech layers) to try right away.</li>
+          </ol>
+          <div class="shot"><span class="cam">📷</span>Screenshot: Recipe Shelf with a few entries</div>
+        </div>
+
+        <div class="op">
+          <h3>Receive <span class="gtag">Standard / Pro</span></h3>
+          <ol>
+            <li><b>Self-contained pack (<span class="mono">.cprp</span>)</b> — just open it. The recipe travels inside; nothing to install.</li>
+            <li><b>Friend Key</b> — point at the <span class="mono">menu</span> file and the <span class="mono">.cpmn</span>, then unpack.</li>
+          </ol>
+          <div class="shot"><span class="cam">📷</span>Screenshot: Receive tab</div>
+        </div>
+
+        <div class="op">
+          <h3>Pairs <span class="gtag">all editions (tiered)</span></h3>
+          <ol>
+            <li><b>Pro:</b> register a <b>new pair</b> → brew a dictionary from samples to grow a new generation → export a generation pack (<span class="mono">.cpgen</span>) for your partner.</li>
+            <li><b>Standard:</b> import the <span class="mono">.cpgen</span>, then pack with the pair dictionary — Efficient <span class="mono">.cpp2</span> / Secret <span class="mono">.cpp3</span> / Keyed <span class="mono">.cpp3l</span>.</li>
+            <li><b>Preview:</b> import generations and open pair packs.</li>
+            <li>Opening looks up the right dictionary by lineage ID and generation — old packs still open with old generations.</li>
+          </ol>
+          <div class="shot"><span class="cam">📷</span>Screenshot: Pairs tab with one entry in the ledger</div>
+        </div>
+
+        <div class="op">
+          <h3>Workshop · Friend Key · Recipe Pack <span class="gtag">Pro</span></h3>
+          <ol>
+            <li><b>Workshop:</b> brew Hot Cocoa / Coffee / Shake recipes from sample files into <span class="mono">.cpsdict</span>. Optional LLM assistance (bring your own key).</li>
+            <li><b>Friend Key:</b> create a limited-release pack (<span class="mono">.cpmn</span> + <span class="mono">menu</span>).</li>
+            <li><b>Recipe Pack:</b> create a self-contained <span class="mono">.cprp</span> — receivers open it with nothing installed.</li>
+          </ol>
+          <div class="shot"><span class="cam">📷</span>Screenshot: Workshop with a finished brew log</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- JAR -->
+  <section id="jar">
+    <div class="wrap">
+      <p class="sec-label">Rugged Pack</p>
+      <h2>A bottle that takes a hit</h2>
+      <p class="sub">Bottle precious data as CPSV: a frame container guarded by Reed–Solomon. Even if parts go missing or get corrupted, CPS attempts a repair.</p>
+      <div class="rugged">
+        <div class="jar">
+          <div class="frames" id="jarFrames">
+            <div class="fr">F0</div><div class="fr">F1</div><div class="fr">F2</div>
+            <div class="fr">F3</div><div class="fr">F4</div><div class="fr">F5</div>
+          </div>
+          <p class="cap" id="jarCap">A six-frame bottle. Break a piece, then watch it heal.</p>
+          <button class="btn" id="jarDamage">Break a piece</button>
+          <button class="btn primary" id="jarHeal">Repair with RS</button>
+        </div>
+        <div>
+          <p style="color:#d3c6b3">
+            Bottling is one checkbox on the Compress tab. The shell is written frame by frame, staying stable even for large files.
+          </p>
+          <p style="color:var(--mute); font-size:.9rem">
+            In Preview, packing is limited to 1.5 GiB including the inner CPS. Unpacking auto-detects the container, so renamed files still open.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAIR -->
+  <section id="pair">
+    <div class="wrap">
+      <p class="sec-label">Pairs</p>
+      <h2>A dictionary two people grow</h2>
+      <p class="sub">
+        Pair up with someone, and a dictionary that belongs to just the two of you grows with every exchange —
+        generation by generation, your packs to each other keep getting smaller.
+      </p>
+
+      <div class="pair">
+        <div class="pnode">
+          <div class="who">PRO</div>
+          <div class="act">Create a pair</div>
+          <div class="det">Register a partner. A lineage is issued and tracked in the ledger.</div>
+        </div>
+        <div class="pnode">
+          <div class="who">PRO</div>
+          <div class="act">Grow the dictionary</div>
+          <div class="det">Brew a new generation from samples, hash-chained to the previous one.</div>
+          <div class="files"><span class="chip">generation +1</span></div>
+        </div>
+        <div class="pnode">
+          <div class="who">share</div>
+          <div class="act">Hand over a generation</div>
+          <div class="det">Export the grown dictionary as a generation pack — zstd shrinks it to a few KB.</div>
+          <div class="files"><span class="chip">.cpgen</span></div>
+        </div>
+        <div class="pnode">
+          <div class="who">STD / PRO</div>
+          <div class="act">Send packs</div>
+          <div class="det">Pack with that generation. Each pack carries its lineage ID and generation.</div>
+          <div class="files"><span class="chip">.cpp2</span><span class="chip">.cpp3</span></div>
+        </div>
+        <div class="pnode">
+          <div class="who">all editions</div>
+          <div class="act">Open</div>
+          <div class="det">The vault dictionary is looked up by lineage/generation. Old packs open with old generations.</div>
+        </div>
+      </div>
+
+      <h3 class="modes-h">Three ways to send</h3>
+      <div class="modes">
+        <div class="mode">
+          <div class="mn">Efficient <span class="mx">.cpp2</span></div>
+          <p>The everyday cup — smallest size with your pair dictionary.</p>
+        </div>
+        <div class="mode">
+          <div class="mn">Secret <span class="mx">.cpp3</span></div>
+          <p>Substitution + 4D shuffle hides content and patterns. No key exchange needed — the pair dictionary is the first key.</p>
+        </div>
+        <div class="mode key">
+          <div class="mn">Keyed <span class="mx">.cpp3l</span></div>
+          <p>Secret plus a <b>per-message key</b> on top. Only someone with both the dictionary and the key can open it. Hand the key over separately.</p>
+        </div>
+      </div>
+
+      <div class="note">
+        <b>Secret is not encryption.</b> It is limited disclosure — hiding plaintext and patterns. For a message you truly want locked down, use Keyed (<span class="mono">.cpp3l</span>) and pass the key another way.
+        Creating pairs and growing dictionaries is Pro; sending with a received dictionary is Standard; importing and opening works even in the free Preview.
+      </div>
+    </div>
+  </section>
+
+  <!-- START -->
+  <section id="start">
+    <div class="wrap">
+      <p class="sec-label">Get CPS</p>
+      <h2>Start with the Preview</h2>
+      <p class="sub">The free Preview is available today. Standard and Pro are in preparation — this page will be updated when they ship.</p>
+      <div class="two">
+        <div class="card">
+          <h3>Microsoft Store — CPS Preview (free)</h3>
+          <p>The easiest way in. Pack with Water / Ice Cocoa, open any .cps, bottle rugged packs, and open pair packs.</p>
+<pre><code><span class="cmt"># Search "CPS Preview" on the Store, or use</span>
+<span class="cmt"># Store ID</span>  <span class="tok">9MXBCTF6FWBF</span></code></pre>
+        </div>
+        <div class="card">
+          <h3>Standard / Pro — coming soon</h3>
+          <p>Recipe Shelf, Receive and pair sending (Standard); Workshop, Friend Key, Recipe Pack and pair growing (Pro) are being prepared for the Store.</p>
+          <p style="margin-bottom:0">An older version's source is published for reference on GitHub → <a href="https://github.com/HoujichaX" target="_blank" rel="noopener">github.com/HoujichaX</a>. The current version's source is not public.</p>
+        </div>
+      </div>
+      <div class="note">
+        <b>Preview limit:</b> packing and unpacking are capped at 1.5 GiB including inner contents. For anything bigger, please wait for Standard / Pro.
+      </div>
+    </div>
+  </section>
+
+  <!-- FILE TYPES -->
+  <section id="files">
+    <div class="wrap">
+      <p class="sec-label">File types</p>
+      <h2>Extension cheat sheet</h2>
+      <ul class="ftypes">
+        <li><span class="ext">.cps</span><span class="fd">Standard pack — one of the five methods, auto-detected on open.</span></li>
+        <li><span class="ext">.cpsv</span><span class="fd">Rugged pack. A frame + RS container built to survive damage.</span></li>
+        <li><span class="ext">.cpsdict</span><span class="fd">Layer / dictionary. Install from the Recipe Shelf.</span></li>
+        <li><span class="ext">.cpgen</span><span class="fd">Pair generation pack — hands a grown dictionary to your partner (lineage + generation inside).</span></li>
+        <li><span class="ext">.cpp2</span><span class="fd">Pair pack (Efficient). Smallest everyday pack with the pair dictionary.</span></li>
+        <li><span class="ext">.cpp3</span><span class="fd">Pair pack (Secret). Substitution + 4D shuffle, limited disclosure.</span></li>
+        <li><span class="ext">.cpp3l</span><span class="fd">Pair pack (Keyed). Secret plus a per-message key — two locks.</span></li>
+        <li><span class="ext">.cprp</span><span class="fd">Self-contained pack with the recipe inside. Opens with nothing installed.</span></li>
+        <li><span class="ext">.zdict</span><span class="fd">Built-in Ice Cocoa dictionaries (six, bundled).</span></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>CPS · Cocoa Pack Service · Native Windows (no Qt / .NET)</div>
+    <div class="mono">zstd bundled · RS error correction · © 2026 HoujichaX</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var frames=[].slice.call(document.querySelectorAll('#jarFrames .fr'));
+  var cap=document.getElementById('jarCap');
+  var broken=[];
+  function reset(){ frames.forEach(function(f,i){ f.className='fr'; f.textContent='F'+i; }); broken=[]; }
+  document.getElementById('jarDamage').addEventListener('click',function(){
+    reset();
+    var n=1+Math.floor(Math.random()*2);
+    var idx=frames.map(function(_,i){return i;});
+    for(var i=idx.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=idx[i];idx[i]=idx[j];idx[j]=t;}
+    broken=idx.slice(0,n);
+    broken.forEach(function(i){ frames[i].className='fr broken'; frames[i].textContent='✕'; });
+    cap.textContent = broken.length + ' frame(s) lost. If enough RS parity survives, they can be repaired.';
+  });
+  document.getElementById('jarHeal').addEventListener('click',function(){
+    if(broken.length===0){ cap.textContent='Nothing is broken yet — press "Break a piece" first.'; return; }
+    broken.forEach(function(i){ frames[i].className='fr healed'; frames[i].textContent='F'+i; });
+    cap.textContent = broken.length + ' frame(s) restored by error correction. The contents are intact.';
+    broken=[];
+  });
+})();
+</script>

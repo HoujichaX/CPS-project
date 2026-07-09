@@ -1,0 +1,620 @@
+<!-- CPS — Cocoa Pack Service · 使い方ガイド (single-file site) -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CPS — Cocoa Pack Service · 使い方ガイド</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --espresso:#241813;      /* base */
+    --panel:#2f211a;
+    --panel-2:#392a21;
+    --line:#4a382d;
+    --line-soft:#3a2a21;
+    --cream:#f2e8d8;         /* text */
+    --foam:#ecd9be;          /* headings */
+    --caramel:#d69b4a;       /* warm accent */
+    --caramel-deep:#a5722f;
+    --sage:#8fc0ad;          /* cold accent */
+    --sage-deep:#4f8571;
+    --mute:#a58d78;
+    --focus:#d69b4a;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--espresso); color:var(--cream);
+    font-family:"Zen Kaku Gothic New",system-ui,sans-serif;
+    font-size:16px; line-height:1.8; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--caramel); text-decoration:none}
+  a:hover{text-decoration:underline}
+  ::selection{background:var(--caramel); color:var(--espresso)}
+  :focus-visible{outline:2px solid var(--focus); outline-offset:3px; border-radius:3px}
+  .wrap{max-width:1000px; margin:0 auto; padding:0 24px}
+  .mono{font-family:"IBM Plex Mono",monospace}
+
+  /* ---- top bar ---- */
+  header.bar{position:sticky; top:0; z-index:30; background:rgba(36,24,19,.85); backdrop-filter:blur(8px); border-bottom:1px solid var(--line-soft)}
+  .bar .wrap{display:flex; align-items:center; justify-content:space-between; height:60px}
+  .brand{display:flex; align-items:baseline; gap:11px}
+  .brand .logo{font-family:"Zen Maru Gothic",sans-serif; font-weight:900; font-size:1.35rem; color:var(--foam); letter-spacing:.04em}
+  .brand .tag{font-size:.72rem; color:var(--mute)}
+  .bar nav{display:flex; gap:20px; font-size:.86rem}
+  .bar nav a{color:var(--mute)}
+  .bar nav a:hover{color:var(--cream); text-decoration:none}
+  @media(max-width:760px){ .bar nav{display:none} .brand .tag{display:none} }
+
+  /* ---- hero ---- */
+  .hero{position:relative; padding:88px 0 64px; overflow:hidden; border-bottom:1px solid var(--line-soft)}
+  .hero::after{content:""; position:absolute; right:-160px; top:-160px; width:460px; height:460px; border-radius:50%; background:radial-gradient(circle, rgba(214,155,74,.14), transparent 70%); pointer-events:none}
+  .eyebrow{font-family:"IBM Plex Mono",monospace; font-size:.76rem; letter-spacing:.24em; text-transform:uppercase; color:var(--caramel); margin:0 0 22px}
+  h1{font-family:"Zen Maru Gothic",sans-serif; font-weight:900; font-size:clamp(2.4rem,6.4vw,4.2rem); line-height:1.08; letter-spacing:.01em; margin:0 0 22px; color:var(--foam)}
+  h1 .cup{color:var(--caramel)}
+  .lede{font-size:1.1rem; color:#d8cbb8; max-width:54ch; margin:0 0 30px}
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap; align-items:center}
+  .btn{font-family:"Zen Kaku Gothic New",sans-serif; font-size:.95rem; font-weight:700; padding:12px 22px; border-radius:999px; border:1.5px solid var(--line); cursor:pointer; background:transparent; color:var(--cream); transition:.15s; display:inline-block}
+  .btn:hover{border-color:var(--caramel); color:var(--caramel); text-decoration:none}
+  .btn.primary{background:var(--caramel); color:var(--espresso); border-color:var(--caramel)}
+  .btn.primary:hover{background:#e6ad5d; color:var(--espresso)}
+  .free-chip{font-size:.8rem; color:var(--mute)}
+
+  /* steam */
+  .steam{position:absolute; left:50%; bottom:0; transform:translateX(-50%); display:flex; gap:20px; opacity:.5; pointer-events:none}
+  .steam i{width:5px; height:52px; border-radius:3px; background:linear-gradient(to top, transparent, var(--caramel)); display:block; animation:rise 3.4s ease-in-out infinite}
+  .steam i:nth-child(2){animation-delay:.5s; height:70px}
+  .steam i:nth-child(3){animation-delay:1s}
+  @keyframes rise{0%,100%{transform:translateY(6px) scaleY(.9); opacity:.25}50%{transform:translateY(-6px) scaleY(1.05); opacity:.6}}
+
+  /* ---- section base ---- */
+  section{padding:66px 0; border-bottom:1px solid var(--line-soft)}
+  .sec-label{font-family:"IBM Plex Mono",monospace; font-size:.74rem; letter-spacing:.2em; text-transform:uppercase; color:var(--caramel); margin:0 0 14px}
+  h2{font-family:"Zen Maru Gothic",sans-serif; font-weight:700; font-size:clamp(1.7rem,3.6vw,2.4rem); margin:0 0 10px; color:var(--foam); line-height:1.2}
+  h2 + .sub{color:var(--mute); margin:0 0 36px; max-width:62ch}
+
+  /* ---- MENU (signature) ---- */
+  .menu-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px}
+  @media(max-width:720px){ .menu-grid{grid-template-columns:1fr} }
+  .drink{position:relative; background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:22px 22px 20px; transition:transform .18s, border-color .18s}
+  .drink:hover{transform:translateY(-3px); border-color:var(--caramel-deep)}
+  .drink.cold:hover{border-color:var(--sage-deep)}
+  .drink-top{display:flex; align-items:flex-start; justify-content:space-between; gap:14px}
+  .drink .dn{font-family:"Zen Maru Gothic",sans-serif; font-weight:700; font-size:1.22rem; color:var(--foam); margin:0}
+  .drink .temp{font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.1em; padding:3px 9px; border-radius:999px; white-space:nowrap}
+  .drink.warm .temp{color:var(--caramel); border:1px solid var(--caramel-deep)}
+  .drink.cold .temp{color:var(--sage); border:1px solid var(--sage-deep)}
+  .drink .desc{font-size:.92rem; color:#d3c6b3; margin:10px 0 16px}
+  .koku{display:flex; align-items:center; gap:9px; margin-bottom:14px}
+  .koku .kl{font-size:.72rem; color:var(--mute); font-family:"IBM Plex Mono",monospace}
+  .cups{display:flex; gap:4px}
+  .cups b{width:15px; height:15px; border-radius:50% 50% 50% 50% / 60% 60% 40% 40%; background:var(--line); display:inline-block}
+  .drink.warm .cups b.on{background:var(--caramel)}
+  .drink.cold .cups b.on{background:var(--sage)}
+  .chips{display:flex; flex-wrap:wrap; gap:7px}
+  .chip{font-size:.72rem; font-family:"IBM Plex Mono",monospace; color:var(--mute); background:var(--panel-2); border:1px solid var(--line-soft); border-radius:6px; padding:3px 9px}
+  .chip.grade{color:var(--foam); border-color:var(--caramel-deep)}
+  .menu-note{margin-top:22px; font-size:.85rem; color:var(--mute)}
+
+  /* ---- grades ---- */
+  .grades{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+  @media(max-width:820px){ .grades{grid-template-columns:1fr} }
+  .grade{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:24px; display:flex; flex-direction:column}
+  .grade.pro{border-color:var(--caramel-deep); background:linear-gradient(180deg,rgba(214,155,74,.07),transparent)}
+  .grade .gname{font-family:"Zen Maru Gothic",sans-serif; font-weight:700; font-size:1.3rem; color:var(--foam)}
+  .grade .gprice{font-family:"IBM Plex Mono",monospace; font-size:.82rem; color:var(--caramel); margin:2px 0 16px}
+  .grade ul{list-style:none; padding:0; margin:0 0 18px; flex:1}
+  .grade li{font-size:.9rem; padding:6px 0 6px 24px; position:relative; color:#d3c6b3}
+  .grade li::before{content:"◍"; position:absolute; left:0; color:var(--sage)}
+  .grade li.no{color:var(--mute)}
+  .grade li.no::before{content:"○"; color:var(--line)}
+  .grade .gfoot{font-size:.76rem; color:var(--mute); font-family:"IBM Plex Mono",monospace; border-top:1px solid var(--line-soft); padding-top:12px}
+
+  /* ---- steps ---- */
+  .steps{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+  @media(max-width:720px){ .steps{grid-template-columns:1fr} }
+  .flow{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:24px}
+  .flow h3{font-family:"Zen Maru Gothic",sans-serif; font-weight:700; font-size:1.15rem; color:var(--foam); margin:0 0 16px}
+  .flow ol{margin:0; padding-left:20px}
+  .flow li{margin:0 0 10px; color:#d3c6b3; font-size:.94rem}
+  .flow li b{color:var(--cream)}
+
+  /* ---- CPSV rugged ---- */
+  .rugged{display:grid; grid-template-columns:1.1fr .9fr; gap:32px; align-items:center}
+  @media(max-width:760px){ .rugged{grid-template-columns:1fr} }
+  .jar{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:26px}
+  .jar .frames{display:flex; gap:5px; margin-bottom:18px}
+  .jar .fr{flex:1; height:44px; border-radius:5px; background:var(--panel-2); border:1px solid var(--line-soft); display:flex; align-items:center; justify-content:center; font-family:"IBM Plex Mono",monospace; font-size:.62rem; color:var(--mute)}
+  .jar .fr.broken{background:#3a2530; border-color:var(--caramel-deep); color:var(--caramel)}
+  .jar .fr.healed{background:rgba(143,192,173,.14); border-color:var(--sage-deep); color:var(--sage)}
+  .jar .cap{font-size:.86rem; color:var(--mute)}
+  .jar button{margin-top:8px}
+
+  /* ---- friendkey ---- */
+  .pair{display:flex; align-items:center; gap:0; overflow-x:auto; padding-bottom:6px}
+  .pnode{min-width:150px; flex:1; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:18px}
+  .pnode + .pnode{margin-left:34px; position:relative}
+  .pnode + .pnode::before{content:"→"; position:absolute; left:-26px; top:50%; transform:translateY(-50%); color:var(--caramel); font-size:1.1rem}
+  .pnode .who{font-family:"IBM Plex Mono",monospace; font-size:.68rem; color:var(--caramel); letter-spacing:.1em; margin-bottom:6px}
+  .pnode .act{font-weight:700; color:var(--foam); font-size:.98rem; margin-bottom:6px}
+  .pnode .det{font-size:.82rem; color:var(--mute)}
+  .pnode .files{margin-top:10px; display:flex; gap:6px; flex-wrap:wrap}
+  .modes-h{font-family:"Zen Maru Gothic",sans-serif; font-weight:700; font-size:1.1rem; color:var(--foam); margin:34px 0 16px}
+  .modes{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+  @media(max-width:720px){ .modes{grid-template-columns:1fr} }
+  .mode{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:20px}
+  .mode.key{border-color:var(--caramel-deep); background:linear-gradient(180deg,rgba(214,155,74,.06),transparent)}
+  .mode .mn{font-family:"Zen Maru Gothic",sans-serif; font-weight:700; font-size:1.05rem; color:var(--foam); display:flex; align-items:baseline; gap:9px; margin-bottom:8px}
+  .mode .mx{font-family:"IBM Plex Mono",monospace; font-size:.74rem; color:var(--caramel)}
+  .mode p{margin:0; font-size:.88rem; color:#d3c6b3}
+  .mode.key p b{color:var(--cream)}
+
+  /* ---- start / code ---- */
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:20px}
+  @media(max-width:760px){ .two{grid-template-columns:1fr} }
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:24px}
+  .card h3{font-family:"Zen Maru Gothic",sans-serif; font-weight:700; font-size:1.15rem; color:var(--foam); margin:0 0 8px}
+  .card p{color:#d3c6b3; font-size:.92rem; margin:0 0 16px}
+  pre{background:#1b120d; border:1px solid var(--line); border-radius:9px; padding:16px 18px; overflow-x:auto; margin:0}
+  code{font-family:"IBM Plex Mono",monospace; font-size:.84rem; color:#e2d6c3}
+  .cmt{color:#8a7259}
+  .tok{color:var(--caramel)}
+
+  /* ---- file types ---- */
+  ul.ftypes{list-style:none; padding:0; margin:0}
+  ul.ftypes li{display:flex; gap:16px; align-items:baseline; padding:11px 0; border-bottom:1px solid var(--line-soft); font-size:.93rem}
+  ul.ftypes li:last-child{border-bottom:0}
+  ul.ftypes .ext{font-family:"IBM Plex Mono",monospace; color:var(--caramel); min-width:92px; font-weight:500}
+  ul.ftypes .fd{color:#d3c6b3}
+
+  .note{background:var(--panel-2); border:1px solid var(--line); border-left:3px solid var(--caramel); border-radius:0 10px 10px 0; padding:16px 20px; font-size:.9rem; color:#d3c6b3; margin-top:26px}
+  .note b{color:var(--cream)}
+
+  /* ---- operation guide ---- */
+  .tabflow{display:flex; flex-direction:column; gap:14px}
+  .op{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:20px 22px}
+  .op h3{font-family:"Zen Maru Gothic",sans-serif; font-weight:700; font-size:1.08rem; color:var(--foam); margin:0 0 4px; display:flex; align-items:baseline; gap:10px}
+  .op h3 .gtag{font-family:"IBM Plex Mono",monospace; font-size:.64rem; letter-spacing:.08em; color:var(--caramel); border:1px solid var(--caramel-deep); border-radius:5px; padding:2px 7px}
+  .op ol{margin:10px 0 0; padding-left:22px}
+  .op li{font-size:.92rem; color:#d3c6b3; margin-bottom:7px}
+  .op li b{color:var(--cream)}
+  .shot{margin-top:14px; border:1.5px dashed var(--line); border-radius:9px; background:var(--panel-2); min-height:120px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:6px; color:var(--mute); font-size:.8rem; padding:18px}
+  .shot .cam{font-size:1.3rem; opacity:.6}
+  .shot img{max-width:100%; border-radius:7px; display:block}
+  footer{padding:44px 0 60px; color:var(--mute); font-size:.84rem}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px}
+</style>
+
+<header class="bar">
+  <div class="wrap">
+    <div class="brand">
+      <span class="logo">CPS</span>
+      <span class="tag">Cocoa Pack Service</span>
+    </div>
+    <nav>
+      <a href="#menu">メニュー</a>
+      <a href="#grades">グレード</a>
+      <a href="#use">使い方</a>
+      <a href="#howto">操作ガイド</a>
+      <a href="#jar">瓶づめ</a>
+      <a href="#pair">ペアリング</a>
+      <a href="#start">入手する</a>
+      <a href="en.html" style="color:var(--caramel); border:1px solid var(--caramel-deep); border-radius:5px; padding:2px 9px">EN</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Windows ネイティブ / zstd / 誤り訂正</p>
+      <h1>データを、<span class="cup">一杯</span>に<br>詰めるカフェ。</h1>
+      <p class="lede">
+        CPS はファイルを「飲みもの」に見立てて圧縮する Windows アプリです。
+        辞書のいらない一杯から、こだわりの一杯まで。壊れにくい瓶づめや、フレンドとの受け渡しもできます。
+      </p>
+      <div class="cta-row">
+        <a class="btn primary" href="#start">Preview を入手</a>
+        <a class="btn" href="#menu">メニューを見る</a>
+        <span class="free-chip">Preview は無料・Microsoft Store 公開中</span>
+      </div>
+    </div>
+    <div class="steam" aria-hidden="true"><i></i><i></i><i></i></div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu">
+    <div class="wrap">
+      <p class="sec-label">メニュー</p>
+      <h2>5つの詰め方から選ぶ</h2>
+      <p class="sub">
+        どれも「ファイルを選ぶ → 一杯を選ぶ → 詰める」だけ。辞書やレシピが要る一杯は、
+        先に「レイヤー管理」でインストールしておきます。「こく」は圧縮の効き目のイメージで、実際はデータによって変わります。
+      </p>
+
+      <div class="menu-grid">
+        <!-- 1 -->
+        <div class="drink cold">
+          <div class="drink-top">
+            <p class="dn">ミネラルウォーター</p>
+            <span class="temp">COLD · 最速</span>
+          </div>
+          <p class="desc">辞書を使わない、いちばん素直な一杯。とにかく速く詰めたいときに。</p>
+          <div class="koku"><span class="kl">こく</span>
+            <span class="cups"><b class="on"></b><b></b><b></b><b></b><b></b></span></div>
+          <div class="chips"><span class="chip">辞書なし</span><span class="chip">フォルダ可</span><span class="chip grade">全グレード</span></div>
+        </div>
+        <!-- 2 -->
+        <div class="drink cold">
+          <div class="drink-top">
+            <p class="dn">アイスココア</p>
+            <span class="temp">COLD · 内蔵辞書</span>
+          </div>
+          <p class="desc">同梱の辞書6種から選ぶ一杯。日本語・英語・技術文書などに合わせられます。</p>
+          <div class="koku"><span class="kl">こく</span>
+            <span class="cups"><b class="on"></b><b class="on"></b><b></b><b></b><b></b></span></div>
+          <div class="chips"><span class="chip">内蔵辞書6種</span><span class="chip">フォルダ可</span><span class="chip grade">全グレード</span></div>
+        </div>
+        <!-- 3 -->
+        <div class="drink warm">
+          <div class="drink-top">
+            <p class="dn">ココア</p>
+            <span class="temp">HOT · レイヤー</span>
+          </div>
+          <p class="desc">インストールしたレイヤー辞書を使う、こくのある一杯。似た内容の多いデータに強い。</p>
+          <div class="koku"><span class="kl">こく</span>
+            <span class="cups"><b class="on"></b><b class="on"></b><b class="on"></b><b></b><b></b></span></div>
+          <div class="chips"><span class="chip">要レイヤー</span><span class="chip">フォルダ可</span><span class="chip grade">Standard 以上</span></div>
+        </div>
+        <!-- 4 -->
+        <div class="drink warm">
+          <div class="drink-top">
+            <p class="dn">コーヒー</p>
+            <span class="temp">HOT · 構造</span>
+          </div>
+          <p class="desc">行の「形」を覚えたレシピで詰める一杯。ログや台帳のような整った構造に効きます。</p>
+          <div class="koku"><span class="kl">こく</span>
+            <span class="cups"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span></div>
+          <div class="chips"><span class="chip">要レシピ</span><span class="chip">単一ファイル専用</span><span class="chip grade">Standard 以上</span></div>
+        </div>
+        <!-- 5 -->
+        <div class="drink cold" style="grid-column:1 / -1">
+          <div class="drink-top">
+            <p class="dn">チョコシェイク</p>
+            <span class="temp">COLD · 多層</span>
+          </div>
+          <p class="desc">長い塊を置き換える多層レイヤーで、いちばん濃く詰める一杯。作れるのは Pro、飲む(圧縮に使う)のは Standard 以上。</p>
+          <div class="koku"><span class="kl">こく</span>
+            <span class="cups"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span></div>
+          <div class="chips"><span class="chip">多層レイヤー</span><span class="chip">フォルダ可</span><span class="chip grade">飲む=STD以上 / 作る=Pro</span></div>
+        </div>
+      </div>
+      <p class="menu-note">詰めた中身は「レイヤー置換 → 後段 zstd → RS コンテナ」の順で仕上がります。開封は方式を自動判定するので、拡張子を変えても開けます。</p>
+    </div>
+  </section>
+
+  <!-- GRADES -->
+  <section id="grades">
+    <div class="wrap">
+      <p class="sec-label">グレード</p>
+      <h2>開く人・使う人・作る人</h2>
+      <p class="sub">できることはグレードで分かれます。しかも思想ではなく、バイナリの構成として区切られています(上位機能のコードが下位版に存在しません)。</p>
+      <div class="grades">
+        <div class="grade">
+          <div class="gname">Preview</div>
+          <div class="gprice">無料 · Store 公開中</div>
+          <ul>
+            <li>ミネラルウォーター / アイスココアで詰める</li>
+            <li>あらゆる方式の <span class="mono">.cps</span> を開く</li>
+            <li>瓶づめ(頑丈梱包・CPSV)</li>
+            <li>ペアの世代辞書を受け取って開く</li>
+            <li class="no">レイヤー辞書での圧縮</li>
+            <li class="no">レシピ・鍵を作る</li>
+          </ul>
+          <div class="gfoot">3 タブ: 圧縮 / 開封 / ペア · 内部含め 1.5 GiB 上限</div>
+        </div>
+        <div class="grade">
+          <div class="gname">Standard</div>
+          <div class="gprice">使う・受け取る側</div>
+          <ul>
+            <li>ココア / コーヒーで圧縮(レイヤー・レシピ)</li>
+            <li>チョコシェイクも飲める</li>
+            <li>レシピ棚でレイヤー(.cpsdict)を管理</li>
+            <li>ペアの世代辞書で梱包して送る</li>
+            <li class="no">ペア辞書を焼く・育てる</li>
+          </ul>
+          <div class="gfoot">5 タブ: 圧縮 / 開封 / レシピ棚 / 受け取り / ペア</div>
+        </div>
+        <div class="grade pro">
+          <div class="gname">Pro</div>
+          <div class="gprice">作る・育てる側</div>
+          <ul>
+            <li>レシピ工房で辞書・レシピ・レイヤーを焼く</li>
+            <li>ペアを作り、世代辞書を育てる・共有する</li>
+            <li>鍵かけ・レシピ同梱の自己完結パック(.cprp)</li>
+            <li>Standard のすべて</li>
+            <li>LLM 支援の辞書製造(BYOK・任意)</li>
+          </ul>
+          <div class="gfoot">6 タブ: レシピ工房 / 圧縮 / 鍵かけ / レシピパック / 開封 / ペア</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- USE -->
+  <section id="use">
+    <div class="wrap">
+      <p class="sec-label">使い方</p>
+      <h2>詰める・開ける、基本の2つ</h2>
+      <p class="sub">まずはこれだけ。どのグレードでも同じ手触りで動きます。</p>
+      <div class="steps">
+        <div class="flow">
+          <h3>☕ 詰める(梱包)</h3>
+          <ol>
+            <li>「梱包する」タブで<b>ファイルを選ぶ</b>(ドロップでも可)</li>
+            <li>メニューから<b>一杯を選ぶ</b>(水 / アイスココア / …)</li>
+            <li><b>「梱包する」</b>を押す</li>
+            <li><b>保存先</b>を決めて完成(<span class="mono">.cps</span>)</li>
+          </ol>
+        </div>
+        <div class="flow">
+          <h3>🫗 開ける(開封)</h3>
+          <ol>
+            <li>「開封する」タブで <span class="mono">.cps</span> / <span class="mono">.cpsv</span> を<b>選ぶ</b></li>
+            <li><b>「開封する」</b>を押す</li>
+            <li>方式は<b>自動判定</b> — 元のファイルに戻る</li>
+            <li>途中が欠けていても<b>RS 誤り訂正</b>で復元を試みます</li>
+          </ol>
+        </div>
+      </div>
+      <div class="note">
+        <b>ココア / コーヒーを使う前に:</b> 「レシピ棚 → レシピを追加」で <span class="mono">.cpsdict</span> をインストールしてください。
+        Standard には同梱の <span class="mono">sample_layers\</span> (日本語の品詞別4種)が入っています。インストール先は <span class="mono">%APPDATA%\cps\layers</span> です。
+      </div>
+    </div>
+  </section>
+
+  <!-- CPSV rugged -->
+  <section id="jar">
+    <div class="wrap">
+      <p class="sec-label">瓶づめ</p>
+      <h2>壊れにくい、頑丈な一本</h2>
+      <p class="sub">大事なデータは「瓶づめ(CPSV)」に。フレーム構造と Reed–Solomon で守るので、一部が欠けても・化けても復元を試みます。</p>
+      <div class="rugged">
+        <div class="jar">
+          <div class="frames" id="jarFrames">
+            <div class="fr">F0</div><div class="fr">F1</div><div class="fr">F2</div>
+            <div class="fr">F3</div><div class="fr">F4</div><div class="fr">F5</div>
+          </div>
+          <p class="cap" id="jarCap">6 フレームの瓶。ボタンで一部を壊して、直る様子を見てみてください。</p>
+          <button class="btn" id="jarDamage">一部を壊す</button>
+          <button class="btn primary" id="jarHeal">誤り訂正で直す</button>
+        </div>
+        <div>
+          <p style="color:#d3c6b3">
+            瓶づめは梱包タブで「瓶づめ」を選ぶだけ。外殻はフレーム単位で少しずつ書き込むので、巨大なファイルでも安定します。
+          </p>
+          <p style="color:var(--mute); font-size:.9rem">
+            Preview 版では内部の CPS を含めて 1.5 GiB までが対象です。開封は中身を見て自動判定するため、拡張子を変えても開けます。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHARE / friendkey -->
+  <section id="pair">
+    <div class="wrap">
+      <p class="sec-label">ペアリング</p>
+      <h2>二人で、育てていく辞書</h2>
+      <p class="sub">
+        特定の相手と「ペア」を組むと、やり取りするほど二人だけの辞書が育ちます。世代を重ねるごとに賢くなり、
+        同じ相手へのパックはどんどん小さくなっていく——それがペアリングです。
+      </p>
+
+      <!-- lifecycle -->
+      <div class="pair">
+        <div class="pnode">
+          <div class="who">PRO</div>
+          <div class="act">ペアを作る</div>
+          <div class="det">相手ごとに新規ペアを登録。系譜(lineage)が発行され、台帳で管理されます。</div>
+        </div>
+        <div class="pnode">
+          <div class="who">PRO</div>
+          <div class="act">辞書を育てる</div>
+          <div class="det">素材から辞書を焼いて新しい世代に。前世代とハッシュチェーンで繋がります。</div>
+          <div class="files"><span class="chip">世代 +1</span></div>
+        </div>
+        <div class="pnode">
+          <div class="who">共有</div>
+          <div class="act">世代を渡す</div>
+          <div class="det">育った辞書を世代パックにして相手へ。zstd で数KBまで縮みます。</div>
+          <div class="files"><span class="chip">.cpgen</span></div>
+        </div>
+        <div class="pnode">
+          <div class="who">STD / PRO</div>
+          <div class="act">送り合う</div>
+          <div class="det">その世代辞書で梱包。パックに系譜ID/世代が刻まれます。</div>
+          <div class="files"><span class="chip">.cpp2</span><span class="chip">.cpp3</span></div>
+        </div>
+        <div class="pnode">
+          <div class="who">全グレード</div>
+          <div class="act">開く</div>
+          <div class="det">系譜ID/世代から保管庫の辞書を引いて開封。古いパックも旧世代で開けます。</div>
+        </div>
+      </div>
+
+      <!-- three modes -->
+      <h3 class="modes-h">送り方は3つ</h3>
+      <div class="modes">
+        <div class="mode">
+          <div class="mn">効率 <span class="mx">.cpp2</span></div>
+          <p>ペア辞書でいちばん小さく詰める、日常づかいの一杯。</p>
+        </div>
+        <div class="mode">
+          <div class="mn">ひみつ <span class="mx">.cpp3</span></div>
+          <p>置換＋4Dシャッフルで中身とパターンを伏せる。鍵の受け渡しは不要(ペア辞書が第一の鍵)。</p>
+        </div>
+        <div class="mode key">
+          <div class="mn">かぎつき <span class="mx">.cpp3l</span></div>
+          <p>ひみつの上に「1通ごとの鍵(フレンドkey)」を重ねた二層。辞書と鍵の<b>両方</b>を持つ人だけが開けます。鍵は別便で手渡し。</p>
+        </div>
+      </div>
+
+      <div class="note">
+        <b>「ひみつ」は暗号ではありません。</b> 平文とパターンを伏せる<b>限定開示</b>です。強く限定したい1通は「かぎつき(.cpp3l)」にして、鍵を別に渡してください。
+        ペアを作る・辞書を育てるのは Pro、受け取った辞書で送るのは Standard、受け取って開くだけなら無料 Preview でできます。
+      </div>
+    </div>
+  </section>
+
+  <!-- HOWTO -->
+  <section id="howto">
+    <div class="wrap">
+      <p class="sec-label">操作ガイド</p>
+      <h2>タブごとの操作手順</h2>
+      <p class="sub">サイドバーのタブに沿って。Preview は 圧縮/開封/ペア の3つ、Standard は＋レシピ棚/受け取り、Pro はさらにレシピ工房・鍵かけ・レシピパックが加わります。</p>
+      <div class="tabflow">
+
+        <div class="op">
+          <h3>圧縮 <span class="gtag">全グレード</span></h3>
+          <ol>
+            <li><b>ファイルを選ぶ</b> — 「参照」またはウィンドウへドラッグ&ドロップ(フォルダも可)。</li>
+            <li><b>方式を選ぶ</b> — 上部のタブから一杯を選択。アイスココアは内蔵辞書、ココア/コーヒー/シェイクはインストール済みレシピをサブ選択。</li>
+            <li>大事なデータなら<b>「瓶づめ(CPSV)」にチェック</b> — RSで守る頑丈梱包に。</li>
+            <li><b>「梱包する」</b>を押して保存先を決めると <span class="mono">.cps</span>(瓶づめなら <span class="mono">.cpsv</span>)が完成。</li>
+          </ol>
+          <div class="shot"><span class="cam">📷</span>スクリーンショット: 圧縮タブ(方式タブとファイル選択が見える状態)</div>
+        </div>
+
+        <div class="op">
+          <h3>開封 <span class="gtag">全グレード</span></h3>
+          <ol>
+            <li><span class="mono">.cps</span> / <span class="mono">.cpsv</span> を選ぶ(ドロップ可)。</li>
+            <li><b>「開封する」</b>を押す — 方式は中身から自動判定。拡張子が変わっていても開けます。</li>
+            <li>瓶づめは一部が欠けていても RS 誤り訂正で復元を試みます。</li>
+          </ol>
+          <div class="shot"><span class="cam">📷</span>スクリーンショット: 開封タブ(完了ログが出た状態)</div>
+        </div>
+
+        <div class="op">
+          <h3>レシピ棚 <span class="gtag">Standard / Pro</span></h3>
+          <ol>
+            <li><b>「レシピを追加」</b>で <span class="mono">.cpsdict</span> を選ぶとインストール(保存先: <span class="mono">%APPDATA%\cps\layers</span>)。</li>
+            <li>一覧で入っているレシピを確認。ココア/コーヒー/シェイクのサブ選択に反映されます。</li>
+            <li>Standard には同梱の <span class="mono">sample_layers\</span>(日本語の品詞別4種)があります。まずこれを入れると試せます。</li>
+          </ol>
+          <div class="shot"><span class="cam">📷</span>スクリーンショット: レシピ棚(一覧に数件入った状態)</div>
+        </div>
+
+        <div class="op">
+          <h3>受け取り <span class="gtag">Standard / Pro</span></h3>
+          <ol>
+            <li><b>自己完結パック(<span class="mono">.cprp</span>)</b> — 選んで開くだけ。レシピ同梱なので何も入れずに開けます。</li>
+            <li><b>フレンドkey</b> — <span class="mono">menu</span> と <span class="mono">.cpmn</span> の2ファイルを指定して開封。</li>
+          </ol>
+          <div class="shot"><span class="cam">📷</span>スクリーンショット: 受け取りタブ</div>
+        </div>
+
+        <div class="op">
+          <h3>ペア <span class="gtag">全グレード(できることは段階制)</span></h3>
+          <ol>
+            <li><b>Pro:</b> 「新規ペア」で相手を登録 → 素材から辞書を焼いて世代を育てる → 世代パック(<span class="mono">.cpgen</span>)を書き出して相手へ。</li>
+            <li><b>Standard:</b> 受け取った <span class="mono">.cpgen</span> を取り込み、そのペア辞書で梱包(効率 <span class="mono">.cpp2</span> / ひみつ <span class="mono">.cpp3</span> / かぎつき <span class="mono">.cpp3l</span>)。</li>
+            <li><b>Preview:</b> 世代辞書を取り込んでペアパックを開くところまで。</li>
+            <li>開封は系譜ID/世代から保管庫の辞書を自動で引きます。古いパックも旧世代で開けます。</li>
+          </ol>
+          <div class="shot"><span class="cam">📷</span>スクリーンショット: ペアタブ(台帳に1件ある状態)</div>
+        </div>
+
+        <div class="op">
+          <h3>レシピ工房・鍵かけ・レシピパック <span class="gtag">Pro</span></h3>
+          <ol>
+            <li><b>レシピ工房:</b> ホットココア/コーヒー/シェイクの3種を、素材ファイルから焼いて <span class="mono">.cpsdict</span> に。LLM支援(BYOK)も任意で。</li>
+            <li><b>鍵かけ:</b> フレンドkeyで限定公開パック(<span class="mono">.cpmn</span>+<span class="mono">menu</span>)を作成。</li>
+            <li><b>レシピパック:</b> レシピ同梱の <span class="mono">.cprp</span> を作成 — 受け取る側は何も入れずに開けます。</li>
+          </ol>
+          <div class="shot"><span class="cam">📷</span>スクリーンショット: レシピ工房(焼き上がりログ)</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- START -->
+  <section id="start">
+    <div class="wrap">
+      <p class="sec-label">入手する</p>
+      <h2>いまは Preview から</h2>
+      <p class="sub">現在配布しているのは無料の Preview です。Standard / Pro は準備中で、公開され次第ここでお知らせします。</p>
+      <div class="two">
+        <div class="card">
+          <h3>Microsoft Store — CPS Preview(無料)</h3>
+          <p>いちばん簡単な入手方法。ミネラルウォーター / アイスココアでの梱包、あらゆる .cps の開封、瓶づめ、ペアパックの開封まで試せます。</p>
+<pre><code><span class="cmt"># Store で「CPS Preview」を検索、または</span>
+<span class="cmt"># ストア ID</span>  <span class="tok">9MXBCTF6FWBF</span></code></pre>
+        </div>
+        <div class="card">
+          <h3>Standard / Pro — 準備中</h3>
+          <p>レシピ棚・受け取り・ペアで送る(Standard)、レシピ工房・鍵かけ・レシピパック・ペアを育てる(Pro)は、Store 公開の準備中です。</p>
+          <p style="margin-bottom:0">GitHub では旧バージョンのソースを参考として公開しています → <a href="https://github.com/HoujichaX" target="_blank" rel="noopener">github.com/HoujichaX</a>。現行版のソースは未公開です。</p>
+        </div>
+      </div>
+      <div class="note">
+        <b>Preview の上限:</b> 梱包・開封とも、内部データを含めて 1.5 GiB までです。それより大きなデータは Standard / Pro の公開をお待ちください。
+      </div>
+    </div>
+  </section>
+
+  <!-- FILE TYPES -->
+  <section id="files">
+    <div class="wrap">
+      <p class="sec-label">ファイルの種類</p>
+      <h2>拡張子の早見表</h2>
+      <ul class="ftypes">
+        <li><span class="ext">.cps</span><span class="fd">標準の梱包ファイル。5つの方式のいずれか(開封時は自動判定)。</span></li>
+        <li><span class="ext">.cpsv</span><span class="fd">瓶づめ。フレーム＋RS で守った頑丈な容器。</span></li>
+        <li><span class="ext">.cpsdict</span><span class="fd">レイヤー/辞書。レイヤー管理からインストールして使う。</span></li>
+        <li><span class="ext">.cpgen</span><span class="fd">ペアの世代パック。育てた辞書を相手に渡す(系譜ID/世代つき)。</span></li>
+        <li><span class="ext">.cpp2</span><span class="fd">ペアパック(効率)。ペア辞書で最小に詰めた日常づかい。</span></li>
+        <li><span class="ext">.cpp3</span><span class="fd">ペアパック(ひみつ)。置換＋4Dシャッフルの限定開示。</span></li>
+        <li><span class="ext">.cpp3l</span><span class="fd">ペアパック(かぎつき)。ひみつ＋1通ごとの鍵の二層。</span></li>
+        <li><span class="ext">.cprp</span><span class="fd">レシピ同梱の自己完結パック。辞書なしで開ける。</span></li>
+        <li><span class="ext">.zdict</span><span class="fd">アイスココアの内蔵辞書(6種・同梱)。</span></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>CPS · Cocoa Pack Service · Windows ネイティブ(Qt/.NET なし)</div>
+    <div class="mono">zstd 同梱 · RS 誤り訂正 · © 2026 ほうじ茶</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var frames=[].slice.call(document.querySelectorAll('#jarFrames .fr'));
+  var cap=document.getElementById('jarCap');
+  var broken=[];
+  function reset(){ frames.forEach(function(f,i){ f.className='fr'; f.textContent='F'+i; }); broken=[]; }
+  document.getElementById('jarDamage').addEventListener('click',function(){
+    reset();
+    // 1〜2枚をランダムに壊す（RSで復元可能な範囲）
+    var n=1+Math.floor(Math.random()*2);
+    var idx=frames.map(function(_,i){return i;});
+    for(var i=idx.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=idx[i];idx[i]=idx[j];idx[j]=t;}
+    broken=idx.slice(0,n);
+    broken.forEach(function(i){ frames[i].className='fr broken'; frames[i].textContent='✕'; });
+    cap.textContent = broken.length + ' フレームが欠損しました。RS のパリティが残っていれば直せます。';
+  });
+  document.getElementById('jarHeal').addEventListener('click',function(){
+    if(broken.length===0){ cap.textContent='壊れているフレームはありません。まず「一部を壊す」を押してください。'; return; }
+    broken.forEach(function(i){ frames[i].className='fr healed'; frames[i].textContent='F'+i; });
+    cap.textContent = broken.length + ' フレームを誤り訂正で復元しました。中身は元通りです。';
+    broken=[];
+  });
+})();
+</script>
