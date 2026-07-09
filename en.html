@@ -329,8 +329,10 @@
             <li>Open any <span class="mono">.cps</span>, whatever the method</li>
             <li>Rugged pack (CPSV bottling)</li>
             <li>Import pair generations and open pair packs</li>
-            <li class="no">Pack with layer dictionaries</li>
-            <li class="no">Create recipes or keys</li>
+            <li class="no">Pack with Hot Cocoa / Coffee / Shake</li>
+            <li class="no">Recipe Shelf (installing dictionaries)</li>
+            <li class="no">Create, grow or send pairs</li>
+            <li class="no">Create recipes, keys or recipe packs</li>
           </ul>
           <div class="gfoot">3 tabs: Compress / Unpack / Pairs · 1.5 GiB limit incl. contents</div>
         </div>
@@ -456,7 +458,7 @@
           <ol>
             <li><b>On Pro (the maker):</b> register a partner with <b>+ New pair</b> → pick sample files close to your real exchanges and press <b>Grow pair dictionary</b> → when grown, <b>Share dictionary</b> exports a <span class="mono">.cpgen</span> to send them.</li>
             <li><b>On Standard (the sender):</b> import the received <span class="mono">.cpgen</span> with <b>Receive dictionary</b> → from then on, <b>Pack &amp; send</b> works for that pair. Three flavours — Efficient (<span class="mono">.cpp2</span>) / Secret (<span class="mono">.cpp3</span>) / Keyed (<span class="mono">.cpp3l</span>).</li>
-            <li><b>On Preview:</b> importing generations and opening pair packs works.</li>
+            <li><b>On Preview:</b> import generations and open pair packs (Keyed too, with the key file). No compressing or sending with the pair dictionary.</li>
             <li>Opening picks the right dictionary automatically from the lineage and generation stamped on the pack. <b>Growing never breaks old packs</b> — old generations stay in the vault.</li>
           </ol>
           <p style="margin:8px 0 0; font-size:.82rem; color:var(--sage)">If stuck: Keyed packs won't open without the key file. Hand the key over separately from the pack.</p>
@@ -672,6 +674,16 @@
       </div>
       <div class="note">
         <b>Preview limit:</b> packing and unpacking are capped at 1.5 GiB including inner contents. For anything bigger, please wait for Standard / Pro.
+      </div>
+      <div class="note" style="border-color:var(--sage-deep); background:rgba(122,138,110,.08)">
+        <b>What the free Preview can't do:</b> the free edition is for trying CPS out, and does not include the following. If you need them, please wait for Standard / Pro.
+        <ul style="margin:10px 0 0; padding-left:20px; line-height:1.7">
+          <li><b>Only two ways to compress: Water and Ice Cocoa.</b> You can't pack with Hot Cocoa, Coffee or Shake.</li>
+          <li><b>No Recipe Shelf.</b> You can't install the bundled sample dictionaries or your own <span class="mono">.cpsdict</span> — so dictionary-based compression isn't available.</li>
+          <li><b>Pairs are "receive &amp; open" only.</b> You can import a received generation and open pair packs — <b>including Keyed (<span class="mono">.cpp3l</span>) packs, given the key file</b>. But you <b>can't compress or send with a pair dictionary (no custom-dictionary compression)</b>. Creating and growing pairs is Pro; sending to a pair (making <span class="mono">.cpp2/.cpp3/.cpp3l</span>) needs Standard or above.</li>
+          <li><b>No Workshop, Friend Key or Recipe Pack.</b> Creating dictionaries, recipes and limited-release packs is Pro-only.</li>
+        </ul>
+        <p style="margin:10px 0 0">Unpacking is unrestricted — Preview opens any <span class="mono">.cps</span> / <span class="mono">.cpsv</span> (including packs made by others). Think of the "creator" features as living in the higher editions.</p>
       </div>
     </div>
   </section>

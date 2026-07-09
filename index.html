@@ -348,8 +348,10 @@
             <li>あらゆる方式の <span class="mono">.cps</span> を開く</li>
             <li>瓶づめ(頑丈梱包・CPSV)</li>
             <li>ペアの世代辞書を受け取って開く</li>
-            <li class="no">レイヤー辞書での圧縮</li>
-            <li class="no">レシピ・鍵を作る</li>
+            <li class="no">ホットココア・コーヒー・シェイクで詰める</li>
+            <li class="no">レシピ棚(辞書のインストール)</li>
+            <li class="no">ペアを作る・育てる・送る</li>
+            <li class="no">レシピ・鍵・レシピパックを作る</li>
           </ul>
           <div class="gfoot">3 タブ: 圧縮 / 開封 / ペア · 内部含め 1.5 GiB 上限</div>
         </div>
@@ -569,7 +571,7 @@
           <ol>
             <li><b>Pro の人(作る側):</b> 左下の「＋ 新規ペア」で相手の名前を登録 → 二人のやり取りに近い素材ファイルを選んで「このペアの辞書を育てる」→ 育ったら「辞書を渡す」で <span class="mono">.cpgen</span> を書き出して相手に送る。</li>
             <li><b>Standard の人(受け取って送る側):</b> 「辞書を受け取る」でもらった <span class="mono">.cpgen</span> を取り込む → 以降そのペアあてに「梱包して送る」が使えます。送り方は3つ — おまかせ(効率・<span class="mono">.cpp2</span>) / ひみつ(<span class="mono">.cpp3</span>) / かぎつき(<span class="mono">.cpp3l</span>)。</li>
-            <li><b>Preview の人:</b> 辞書の取り込みと、ペアパックを開くところまでできます。</li>
+            <li><b>Preview の人:</b> 世代辞書の取り込みと、ペアパックの開封まで（かぎつきは鍵ファイルがあれば開封可）。ペア辞書での圧縮・送信はできません。</li>
             <li>開くときは、パックに刻まれた系譜と世代から自動で正しい辞書が選ばれます。<b>辞書を育てても、昔のパックはちゃんと開きます</b>(古い世代が保管されているため)。</li>
           </ol>
           <p style="margin:8px 0 0; font-size:.82rem; color:var(--sage)">つまずいたら: 「かぎつき」は鍵ファイルがないと開きません。鍵はパックとは別の方法で受け渡しを。</p>
@@ -693,6 +695,16 @@
       </div>
       <div class="note">
         <b>Preview の上限:</b> 梱包・開封とも、内部データを含めて 1.5 GiB までです。それより大きなデータは Standard / Pro の公開をお待ちください。
+      </div>
+      <div class="note" style="border-color:var(--sage-deep); background:rgba(122,138,110,.08)">
+        <b>Preview（無料）でできないこと:</b> 無料版は「気軽に試す」ためのもので、次の機能は含まれていません。必要な場合は Standard / Pro の公開をお待ちください。
+        <ul style="margin:10px 0 0; padding-left:20px; line-height:1.7">
+          <li><b>圧縮はミネラルウォーターとアイスココアの2つだけ。</b> ホットココア・コーヒー・シェイクでは詰められません。</li>
+          <li><b>レシピ棚がありません。</b> 同梱のお試し辞書や自作の <span class="mono">.cpsdict</span> をインストールして使うことはできません（＝辞書を使う圧縮ができません）。</li>
+          <li><b>ペアは「受け取って開く」だけ。</b> 届いた世代辞書を取り込んで、ペアパックを開けます — <b>かぎつき（<span class="mono">.cpp3l</span>）も鍵ファイルがあれば開けます</b>。ただし<b>ペア辞書を使った圧縮・送信（独自辞書での圧縮）はできません</b>。ペアを新しく作る・辞書を育てるのは Pro、ペアあてに送る（<span class="mono">.cpp2/.cpp3/.cpp3l</span> の作成）は Standard 以上です。</li>
+          <li><b>レシピ工房・鍵かけ・レシピパックはありません。</b> 辞書やレシピ、限定公開パックを作る機能は Pro 専用です。</li>
+        </ul>
+        <p style="margin:10px 0 0">開封は制限なしで、あらゆる方式の <span class="mono">.cps</span> / <span class="mono">.cpsv</span> を開けます（他の人が作ったものも）。「作る側」の機能が上位グレード、と考えるのが近いです。</p>
       </div>
     </div>
   </section>
