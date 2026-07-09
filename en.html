@@ -359,7 +359,7 @@
             <li>Everything in Standard</li>
             <li>Optional LLM-assisted dictionary building (BYOK)</li>
           </ul>
-          <div class="gfoot">6 tabs: Workshop / Compress / Friend Key / Recipe Pack / Unpack / Pairs</div>
+          <div class="gfoot">7 tabs: Workshop / Compress / Unpack / Recipe Shelf / Friend Key / Recipe Pack / Pairs</div>
         </div>
       </div>
     </div>
@@ -403,7 +403,7 @@
     <div class="wrap">
       <p class="sec-label">How-To</p>
       <h2>Every tab, gently</h2>
-      <p class="sub">Following the sidebar, top to bottom. Each block starts with "what is this screen for?" so you always know where you are.</p>
+      <p class="sub">Following the sidebar, top to bottom. Each block starts with "what is this screen for?" so you always know where you are. Pro has every Standard tab plus three maker tabs (Workshop, Friend Key, Recipe Pack) — receiving (.cprp / friend keys) lives inside the Unpack tab on Pro.</p>
       <div class="tabflow">
 
         <div class="op">
@@ -427,6 +427,7 @@
             <li>Pick the file (drop works).</li>
             <li>Press <b>Unpack</b>. The cup it was packed with is <b>detected automatically</b> — you don't need to remember. Renamed files open fine too.</li>
             <li>Rugged packs attempt error-corrected repair if parts are missing or corrupted.</li>
+            <li><b>On Pro this tab doubles as Receive</b> — a self-contained pack (<span class="mono">.cprp</span>) opens by auto-detection like any file, and friend keys open via the dedicated fields at the bottom of the tab (point at both <span class="mono">menu</span> and <span class="mono">.cpmn</span>).</li>
           </ol>
           <p style="margin:8px 0 0; font-size:.82rem; color:var(--sage)">If stuck: "dictionary not found" → the recipe or pair generation used for this pack isn't installed yet. Ask the sender, or import it via Receive / Pairs.</p>
           <div class="shot"><span class="cam">📷</span>Screenshot: Unpack tab with a completed log</div>
@@ -438,17 +439,19 @@
           <ol>
             <li>Press <b>Add recipe</b> and pick a <span class="mono">.cpsdict</span> — it lands on the shelf (stored in <span class="mono">%APPDATA%\cps\layers</span>).</li>
             <li>Installed recipes appear in the pickers on the Compress tab.</li>
-            <li>Start with the bundled <span class="mono">sample_layers\</span> that ships with Standard (described under Dictionaries below).</li>
+            <li>Start with the bundled <span class="mono">sample_layers\</span> (described under Dictionaries below) — Standard and Pro install them to the shelf automatically on first launch.</li>
+            <li><b>On Pro the shelf works with the Workshop</b> — add cocoa/coffee <span class="mono">.cpsdict</span> files you baked; Shake layers are installed automatically at bake time, so no extra step. "Create memo" saves a Shake layer set with its order.</li>
           </ol>
           <div class="shot"><span class="cam">📷</span>Screenshot: Recipe Shelf with a few entries</div>
         </div>
 
         <div class="op">
-          <h3>Receive <span class="gtag">Standard / Pro</span></h3>
+          <h3>Receive <span class="gtag">Standard</span></h3>
           <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">What is this screen for? — The counter where special packs from other people are opened.</p>
           <ol>
             <li>Got a <b>self-contained pack (<span class="mono">.cprp</span>)</b>? Just open it — the recipe travels inside, nothing to prepare.</li>
             <li>Got a <b>Friend Key</b>? It arrives as a <b>set of two files</b>: the <span class="mono">.cpmn</span> (contents) and the <span class="mono">menu</span> (key info). Point at both to unpack — one alone won't open.</li>
+            <li><b>Pro has no Receive tab</b> — do the same from the Unpack tab (.cprp opens by auto-detection; friend keys via the fields at the bottom).</li>
           </ol>
           <div class="shot"><span class="cam">📷</span>Screenshot: Receive tab</div>
         </div>
@@ -467,14 +470,29 @@
         </div>
 
         <div class="op">
-          <h3>Workshop · Friend Key · Recipe Pack <span class="gtag">Pro</span></h3>
-          <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">What is this screen for? — Three tabs for makers: brew recipes, lock packs, and ship recipes with the pack.</p>
+          <h3>Workshop <span class="gtag">Pro</span></h3>
+          <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">What is this screen for? — Baking recipes (.cpsdict) from your own data. The screen reads top to bottom: material → kind → name → size → detail → bake.</p>
           <ol>
-            <li><b>Workshop:</b> feed it sample files (similar to what you'll compress) and it brews Hot Cocoa / Coffee / Shake recipes into <span class="mono">.cpsdict</span>. Optional LLM assistance (bring your own API key).</li>
-            <li><b>Friend Key:</b> creates a limited-release pack (<span class="mono">.cpmn</span> + <span class="mono">menu</span>) that only your friend can open.</li>
-            <li><b>Recipe Pack:</b> creates a self-contained <span class="mono">.cprp</span> — the kindest format to distribute, since receivers install nothing.</li>
+            <li><b>Pick the material</b> — "File…" for one file, or <b>"Folder…" for a whole folder</b>. A folder is <b>learned as a bundle</b> (use this for mail archives and log piles — a structure that appears once per file becomes a learnable pattern when bundled).</li>
+            <li><b>Pick the kind</b> — Hot Cocoa / Coffee / Shake on the tabs at the top. See "Recipe Tips" for which fits your data.</li>
+            <li><b>Name the recipe</b> — shown on the shelf and in memos.</li>
+            <li><b>Size</b> — Light (256 KB) / Standard (1 MB) / Full (2 MB) / Custom. Bigger means more vocabulary, but gains plateau. Standard is a fine default.</li>
+            <li><b>Detail (optional)</b> — Min/Max = phrase length range, Freq = occurrences required (defaults 4 / 64 / 3). <b>With Shake the meaning changes</b>: Min = boundary of the long layer, Max = boundary of the short layer (defaults switch to 16 / 4 automatically).</li>
+            <li><b>LLM curation (optional)</b> — tick to have an LLM filter candidate phrases. Choose a provider and enter your API key (<b>your key; your material is sent</b>). "Save key" remembers it. Recipes bake fine without it.</li>
+            <li><b>Press "Make recipe"</b> — <b>Cocoa/Coffee:</b> choose where to save and you get a <span class="mono">.cpsdict</span>; add it on the Recipe Shelf to use it yourself, or hand the file to a Standard user. <b>Shake:</b> long/mid/short <b>layers are baked and installed to the shelf automatically</b>, together with a <b>recipe memo</b> that remembers their order (no save dialog).</li>
           </ol>
+          <p style="margin:8px 0 0; font-size:.82rem; color:var(--sage)">If stuck: "no frequent phrases found" → your material is too small. Add more same-genre data or lower Freq.</p>
           <div class="shot"><span class="cam">📷</span>Screenshot: Workshop with a finished brew log</div>
+        </div>
+
+        <div class="op">
+          <h3>Friend Key · Recipe Pack <span class="gtag">Pro</span></h3>
+          <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">What is this screen for? — Two tabs for handing things out.</p>
+          <ol>
+            <li><b>Friend Key:</b> creates a limited-release pack (<span class="mono">.cpmn</span> + <span class="mono">menu</span>) only your friend can open. Hand over both files as a set.</li>
+            <li><b>Recipe Pack:</b> creates a self-contained <span class="mono">.cprp</span> with the recipe inside — receivers install nothing.</li>
+          </ol>
+          <div class="shot"><span class="cam">📷</span>Screenshot: Friend Key tab</div>
         </div>
 
       </div>

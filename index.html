@@ -378,7 +378,7 @@
             <li>Standard のすべて</li>
             <li>LLM 支援の辞書製造(BYOK・任意)</li>
           </ul>
-          <div class="gfoot">6 タブ: レシピ工房 / 圧縮 / 鍵かけ / レシピパック / 開封 / ペア</div>
+          <div class="gfoot">7 タブ: レシピ工房 / 圧縮 / 開封 / レシピ棚 / 鍵かけ / レシピパック / ペア</div>
         </div>
       </div>
     </div>
@@ -516,7 +516,7 @@
     <div class="wrap">
       <p class="sec-label">操作ガイド</p>
       <h2>タブごとの、ていねいな手順</h2>
-      <p class="sub">サイドバーのタブに沿って、上から順に。各タブの「これは何をする画面？」から読めば迷いません。</p>
+      <p class="sub">サイドバーのタブに沿って、上から順に。各タブの「これは何をする画面？」から読めば迷いません。Pro は Standard の全タブ＋作り手用3タブ(工房・鍵かけ・レシピパック)の構成です。受け取り(.cprp/フレンドkey)は Pro では「開封」タブに統合されています。</p>
       <div class="tabflow">
 
         <div class="op">
@@ -540,6 +540,7 @@
             <li>ファイルを選ぶ(ドラッグでもOK)。</li>
             <li><b>「開封する」</b>を押すだけ。どの一杯で詰めたかは<b>自動で判定</b>されるので、覚えていなくて大丈夫。拡張子を変えられていても開きます。</li>
             <li>瓶づめ(<span class="mono">.cpsv</span>)は、途中が欠けたり化けたりしていても誤り訂正で復元を試みます。</li>
+            <li><b>Pro ではこのタブが「受け取り」も兼ねます</b> — 自己完結パック(<span class="mono">.cprp</span>)はそのまま選べば自動判定で開き、フレンドkey はタブ下部の専用欄(<span class="mono">menu</span>＋<span class="mono">.cpmn</span> の2ファイル指定)で開封します。</li>
           </ol>
           <p style="margin:8px 0 0; font-size:.82rem; color:var(--sage)">つまずいたら: 「辞書が見つかりません」→そのパックに使われたレシピや世代辞書がまだ入っていません。作った人に聞くか、受け取り/ペアで取り込みを。</p>
           <div class="shot"><span class="cam">📷</span>スクリーンショット: 開封タブ(完了ログが出た状態)</div>
@@ -551,17 +552,19 @@
           <ol>
             <li><b>「レシピを追加」</b>を押して <span class="mono">.cpsdict</span> ファイルを選ぶと、棚に入ります(保存先: <span class="mono">%APPDATA%\cps\layers</span>)。</li>
             <li>入れたレシピは、圧縮タブのココア/コーヒー/シェイクの選択欄に現れます。</li>
-            <li>最初は Standard 同梱の <span class="mono">sample_layers\</span> から入れてみましょう(中身は下の「同梱辞書」で説明)。</li>
+            <li>最初は同梱の <span class="mono">sample_layers\</span> から入れてみましょう(中身は下の「同梱辞書」で説明)。Standard / Pro とも初回起動時に自動で棚に並びます。</li>
+            <li><b>Pro では工房と連携します</b> — 工房で焼いたココア/コーヒーの <span class="mono">.cpsdict</span> をここで追加。シェイクは焼いた時点で自動導入されるので追加操作は不要です。「メモを作る」でシェイクの層構成(適用順)を保存できます。</li>
           </ol>
           <div class="shot"><span class="cam">📷</span>スクリーンショット: レシピ棚(一覧に数件入った状態)</div>
         </div>
 
         <div class="op">
-          <h3>受け取り <span class="gtag">Standard / Pro</span></h3>
+          <h3>受け取り <span class="gtag">Standard</span></h3>
           <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">これは何をする画面？ — 人からもらった特別なパックを開ける窓口。</p>
           <ol>
             <li><b>自己完結パック(<span class="mono">.cprp</span>)</b>をもらったら — 選んで開くだけ。レシピが同梱されているので、何も準備が要りません。</li>
             <li><b>フレンドkey</b> をもらったら — <span class="mono">.cpmn</span>(中身)と <span class="mono">menu</span>(鍵情報)の<b>2つセット</b>で届きます。両方を指定して開封。片方だけでは開きません。</li>
+            <li><b>Pro にはこのタブはありません</b> — 同じ操作を「開封」タブで行います(.cprp は自動判定、フレンドkey は開封タブ下部の欄で)。</li>
           </ol>
           <div class="shot"><span class="cam">📷</span>スクリーンショット: 受け取りタブ</div>
         </div>
@@ -580,14 +583,29 @@
         </div>
 
         <div class="op">
-          <h3>レシピ工房・鍵かけ・レシピパック <span class="gtag">Pro</span></h3>
-          <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">これは何をする画面？ — レシピを自作して配る、作り手のための3タブ。</p>
+          <h3>レシピ工房 <span class="gtag">Pro</span></h3>
+          <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">これは何をする画面？ — 自分のデータからレシピ(.cpsdict)を焼く工房。画面は上から「素材 → 種類 → 名前 → サイズ → 詳細 → 焼く」の一本道です。</p>
           <ol>
-            <li><b>レシピ工房:</b> 素材ファイル(圧縮したいものに近い内容)を渡すと、ホットココア/コーヒー/シェイクのレシピを焼いて <span class="mono">.cpsdict</span> にしてくれます。LLM に手伝わせる設定もあります(自分のAPIキーを使う方式・任意)。</li>
-            <li><b>鍵かけ:</b> 相手だけが開ける限定公開パック(<span class="mono">.cpmn</span>+<span class="mono">menu</span>)を作ります。</li>
-            <li><b>レシピパック:</b> レシピを同梱した <span class="mono">.cprp</span> を作ります。相手は何も入れずに開けるので、配布にいちばん親切。</li>
+            <li><b>素材を選ぶ</b> — 「ファイル…」で1つ、または<b>「フォルダ…」で丸ごと</b>。フォルダを選ぶと中のファイルを<b>束ねて学習</b>します(メールの束・ログの束はこちら。1ファイルでは1回しか出ない構造も、束ねれば「型」として学べます)。</li>
+            <li><b>種類を選ぶ</b> — 上部のタブで ホットココア / コーヒー / シェイク。素材との相性は「レシピ作りのコツ」を参照。</li>
+            <li><b>レシピ名</b>を付ける — 棚やメモに表示される名前です。</li>
+            <li><b>サイズ</b> — 手軽(256KB) / 標準(1MB) / 本格(2MB) / カスタム。大きいほど語彙が増えますが、ある点から先は頭打ちです。迷ったら標準。</li>
+            <li><b>詳細(任意)</b> — 最短/最長=拾うフレーズの長さ範囲、頻度=採用に必要な出現回数(既定 4 / 64 / 3)。<b>シェイク選択時だけ意味が変わり</b>、最短=長い層との境界・最長=短い層との境界になります(既定 16 / 4 に自動で切り替わります)。</li>
+            <li><b>LLMキュレーション(任意)</b> — チェックすると候補フレーズをLLMが選別します。提供元を選んでAPIキーを入力(<b>自分のキー・素材が送信されます</b>)。「キーを保存」で次回から入力不要。使わなくてもレシピは焼けます。</li>
+            <li><b>「レシピを作る」</b>を押す — <b>ココア/コーヒー:</b> 保存先を選んで <span class="mono">.cpsdict</span> が完成。レシピ棚で追加すれば自分でも使え、ファイルを渡せば Standard の人も使えます。<b>シェイク:</b> 長/中/短の<b>3層が自動で焼かれて棚に導入</b>され、順序を覚えた<b>レシピメモ</b>も一緒に作られます(保存先選択は不要)。</li>
           </ol>
+          <p style="margin:8px 0 0; font-size:.82rem; color:var(--sage)">つまずいたら: 「頻出フレーズが見つかりません」→素材が少なすぎます。同種のデータを足すか、頻度を下げてみてください。</p>
           <div class="shot"><span class="cam">📷</span>スクリーンショット: レシピ工房(焼き上がりログ)</div>
+        </div>
+
+        <div class="op">
+          <h3>鍵かけ・レシピパック <span class="gtag">Pro</span></h3>
+          <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">これは何をする画面？ — 焼いたレシピや荷物を「配る」ための2タブ。</p>
+          <ol>
+            <li><b>鍵かけ:</b> 相手だけが開ける限定公開パック(<span class="mono">.cpmn</span>+<span class="mono">menu</span>)を作ります。2ファイルセットで渡してください。</li>
+            <li><b>レシピパック:</b> レシピを同梱した <span class="mono">.cprp</span> を作ります。受け取る側は何も入れずに開けるので、配布にいちばん親切。</li>
+          </ol>
+          <div class="shot"><span class="cam">📷</span>スクリーンショット: 鍵かけタブ</div>
         </div>
 
       </div>
