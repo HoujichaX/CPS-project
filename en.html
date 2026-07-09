@@ -170,6 +170,30 @@
   .note{background:var(--panel-2); border:1px solid var(--line); border-left:3px solid var(--caramel); border-radius:0 10px 10px 0; padding:16px 20px; font-size:.9rem; color:#d3c6b3; margin-top:26px}
   .note b{color:var(--cream)}
 
+  /* ---- quick start ---- */
+  .qs{counter-reset:qs; display:flex; flex-direction:column; gap:12px}
+  .q{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px 18px 16px 62px; position:relative; font-size:.95rem; color:#d3c6b3}
+  .q::before{counter-increment:qs; content:counter(qs); position:absolute; left:18px; top:50%; transform:translateY(-50%); width:30px; height:30px; border-radius:50%; background:var(--caramel); color:var(--espresso); font-family:"Zen Maru Gothic",sans-serif; font-weight:900; display:flex; align-items:center; justify-content:center}
+  .q b{color:var(--foam)}
+  .q .safe{display:block; margin-top:4px; font-size:.8rem; color:var(--sage)}
+
+  /* ---- bundled dictionaries ---- */
+  .dict-table{width:100%; border-collapse:collapse; font-size:.9rem}
+  .dict-table th{font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); text-align:left; padding:8px 12px; border-bottom:1px solid var(--line)}
+  .dict-table td{padding:11px 12px; border-bottom:1px solid var(--line-soft); color:#d3c6b3; vertical-align:top}
+  .dict-table td:first-child{font-weight:700; color:var(--foam); white-space:nowrap}
+  .dict-table .fn{font-family:"IBM Plex Mono",monospace; font-size:.76rem; color:var(--caramel)}
+  .dict-table .pick{color:var(--sage); font-size:.8rem}
+  .dict-note{margin-top:14px; font-size:.86rem; color:var(--mute)}
+
+  /* ---- glossary ---- */
+  .qa{display:flex; flex-direction:column; gap:12px}
+  .qa .item{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:18px 20px}
+  .qa .qq{font-family:"Zen Maru Gothic",sans-serif; font-weight:700; color:var(--foam); margin:0 0 6px; font-size:1rem}
+  .qa .qq::before{content:"Q. "; color:var(--caramel)}
+  .qa .aa{margin:0; font-size:.92rem; color:#d3c6b3}
+  .qa .aa::before{content:"A. "; color:var(--sage); font-weight:700}
+
   /* ---- operation guide ---- */
   .tabflow{display:flex; flex-direction:column; gap:14px}
   .op{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:20px 22px}
@@ -192,12 +216,11 @@
       <span class="tag">Cocoa Pack Service</span>
     </div>
     <nav>
+      <a href="#quick">First Cup</a>
       <a href="#menu">Menu</a>
-      <a href="#grades">Editions</a>
-      <a href="#use">Basics</a>
       <a href="#howto">How-To</a>
-      <a href="#jar">Rugged Pack</a>
-      <a href="#pair">Pairs</a>
+      <a href="#dicts">Dictionaries</a>
+      <a href="#words">Glossary</a>
       <a href="#start">Get CPS</a>
       <a href="index.html" style="color:var(--caramel); border:1px solid var(--caramel-deep); border-radius:5px; padding:2px 9px">日本語</a>
     </nav>
@@ -224,14 +247,30 @@
     <div class="steam" aria-hidden="true"><i></i><i></i><i></i></div>
   </section>
 
+  <!-- QUICK START -->
+  <section id="quick">
+    <div class="wrap">
+      <p class="sec-label">First cup</p>
+      <h2>Five minutes, one cup</h2>
+      <p class="sub">Skip everything difficult for now. Take the simplest cup once around — pack, then bring it back. Your original file is never touched, so there's nothing to break.</p>
+      <div class="qs">
+        <div class="q"><b>Install CPS Preview</b> — search "CPS Preview" on the Microsoft Store (free).</div>
+        <div class="q"><b>Drag a file in</b> — open the app, go to the Compress tab, and drop any text file or image onto the window.<span class="safe">✓ Your original stays where it is. Only a copy gets packed.</span></div>
+        <div class="q"><b>Press Pack</b> — "Water" is already selected. Press Pack, pick a destination, and you have a <span class="mono">.cps</span>.</div>
+        <div class="q"><b>Bring it back</b> — drop that <span class="mono">.cps</span> onto the Unpack tab and press Unpack. The exact same file comes back.</div>
+        <div class="q"><b>Try the next cup</b> — same steps, but choose "Ice Cocoa" and the "all-round" dictionary. The closer the dictionary matches your data, the smaller the pack.</div>
+      </div>
+    </div>
+  </section>
+
   <!-- MENU -->
   <section id="menu">
     <div class="wrap">
       <p class="sec-label">Menu</p>
       <h2>Five ways to pack</h2>
       <p class="sub">
-        Every cup works the same way: pick a file → pick a drink → pack. Drinks that need recipes
-        must be installed first from the Recipe Shelf. "Body" is a feel for compression strength — actual results depend on your data.
+        Every cup works the same way: pick a file → pick a drink → pack. <b style="color:var(--foam)">When in doubt, Water; once comfortable, Ice Cocoa</b> — that covers most days.
+        From Hot Cocoa onward you need a "recipe" installed first (see the How-To below). "Body" is a feel for compression strength — actual results depend on your data.
       </p>
 
       <div class="menu-grid">
@@ -258,7 +297,7 @@
         </div>
         <div class="drink warm">
           <div class="drink-top"><p class="dn">Coffee</p><span class="temp">HOT · structure</span></div>
-          <p class="desc">Packs with a recipe that has learned the shape of your lines — great for logs and ledgers.</p>
+          <p class="desc">Learns the <b>shape</b> of your lines. Only for data where the same line-shape repeats with just the numbers changing — like logs. Not for diaries or ordinary prose.</p>
           <div class="koku"><span class="kl">body</span>
             <span class="cups"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span></div>
           <div class="chips"><span class="chip">needs a recipe</span><span class="chip">single file only</span><span class="chip grade">Standard+</span></div>
@@ -360,71 +399,162 @@
   <section id="howto">
     <div class="wrap">
       <p class="sec-label">How-To</p>
-      <h2>Step by step, tab by tab</h2>
-      <p class="sub">Following the sidebar. Preview has Compress / Unpack / Pairs; Standard adds Recipe Shelf and Receive; Pro adds Workshop, Friend Key and Recipe Pack.</p>
+      <h2>Every tab, gently</h2>
+      <p class="sub">Following the sidebar, top to bottom. Each block starts with "what is this screen for?" so you always know where you are.</p>
       <div class="tabflow">
 
         <div class="op">
           <h3>Compress <span class="gtag">all editions</span></h3>
+          <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">What is this screen for? — Packing a file into a cup to make a <span class="mono">.cps</span>. Your everyday screen.</p>
           <ol>
-            <li><b>Pick a file</b> — Browse, or drag &amp; drop onto the window (folders too).</li>
-            <li><b>Pick a drink</b> — from the tabs at the top. Ice Cocoa picks a built-in dictionary; Hot Cocoa / Coffee / Shake pick an installed recipe.</li>
-            <li>For precious data, tick <b>Rugged pack (CPSV)</b> — a frame container protected by RS.</li>
-            <li>Press <b>Pack</b>, choose a destination, and you get a <span class="mono">.cps</span> (or <span class="mono">.cpsv</span>).</li>
+            <li><b>Pick a file</b> — press Browse, or drop it anywhere on the window. Folders work too (they're bundled automatically).</li>
+            <li><b>Pick a cup</b> — from the method tabs. When in doubt, Water. Ice Cocoa shows a dictionary picker — choose whatever is closest to your content (or "all-round" if unsure).</li>
+            <li>Hot Cocoa / Coffee / Shake show a recipe picker. <b>If the list is empty, no recipe is installed yet</b> — visit the Recipe Shelf first.</li>
+            <li>For precious data, tick <b>Rugged pack</b> — a container that can heal itself (<span class="mono">.cpsv</span>).</li>
+            <li>Press <b>Pack</b>, choose a destination, done. The log shows the shrunken size ("→ ○○ B").</li>
           </ol>
+          <p style="margin:8px 0 0; font-size:.82rem; color:var(--sage)">If stuck: nothing happens → re-pick the file. "No recipe" → install one on the Recipe Shelf.</p>
           <div class="shot"><span class="cam">📷</span>Screenshot: Compress tab with method tabs and a file selected</div>
         </div>
 
         <div class="op">
           <h3>Unpack <span class="gtag">all editions</span></h3>
+          <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">What is this screen for? — Turning a <span class="mono">.cps</span> / <span class="mono">.cpsv</span> back into the original file.</p>
           <ol>
-            <li>Pick a <span class="mono">.cps</span> / <span class="mono">.cpsv</span> (drop works).</li>
-            <li>Press <b>Unpack</b> — the method is auto-detected, even if the file was renamed.</li>
-            <li>Rugged packs attempt RS repair when parts are missing or corrupted.</li>
+            <li>Pick the file (drop works).</li>
+            <li>Press <b>Unpack</b>. The cup it was packed with is <b>detected automatically</b> — you don't need to remember. Renamed files open fine too.</li>
+            <li>Rugged packs attempt error-corrected repair if parts are missing or corrupted.</li>
           </ol>
+          <p style="margin:8px 0 0; font-size:.82rem; color:var(--sage)">If stuck: "dictionary not found" → the recipe or pair generation used for this pack isn't installed yet. Ask the sender, or import it via Receive / Pairs.</p>
           <div class="shot"><span class="cam">📷</span>Screenshot: Unpack tab with a completed log</div>
         </div>
 
         <div class="op">
           <h3>Recipe Shelf <span class="gtag">Standard / Pro</span></h3>
+          <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">What is this screen for? — The shelf where recipes (<span class="mono">.cpsdict</span>) for Hot Cocoa / Coffee / Shake live.</p>
           <ol>
-            <li><b>Add recipe</b> and choose a <span class="mono">.cpsdict</span> to install (stored in <span class="mono">%APPDATA%\cps\layers</span>).</li>
-            <li>The list shows what's installed — it feeds the sub-selection for Hot Cocoa / Coffee / Shake.</li>
-            <li>Standard ships with <span class="mono">sample_layers\</span> (four Japanese part-of-speech layers) to try right away.</li>
+            <li>Press <b>Add recipe</b> and pick a <span class="mono">.cpsdict</span> — it lands on the shelf (stored in <span class="mono">%APPDATA%\cps\layers</span>).</li>
+            <li>Installed recipes appear in the pickers on the Compress tab.</li>
+            <li>Start with the bundled <span class="mono">sample_layers\</span> that ships with Standard (described under Dictionaries below).</li>
           </ol>
           <div class="shot"><span class="cam">📷</span>Screenshot: Recipe Shelf with a few entries</div>
         </div>
 
         <div class="op">
           <h3>Receive <span class="gtag">Standard / Pro</span></h3>
+          <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">What is this screen for? — The counter where special packs from other people are opened.</p>
           <ol>
-            <li><b>Self-contained pack (<span class="mono">.cprp</span>)</b> — just open it. The recipe travels inside; nothing to install.</li>
-            <li><b>Friend Key</b> — point at the <span class="mono">menu</span> file and the <span class="mono">.cpmn</span>, then unpack.</li>
+            <li>Got a <b>self-contained pack (<span class="mono">.cprp</span>)</b>? Just open it — the recipe travels inside, nothing to prepare.</li>
+            <li>Got a <b>Friend Key</b>? It arrives as a <b>set of two files</b>: the <span class="mono">.cpmn</span> (contents) and the <span class="mono">menu</span> (key info). Point at both to unpack — one alone won't open.</li>
           </ol>
           <div class="shot"><span class="cam">📷</span>Screenshot: Receive tab</div>
         </div>
 
         <div class="op">
           <h3>Pairs <span class="gtag">all editions (tiered)</span></h3>
+          <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">What is this screen for? — Growing a dictionary that belongs to just you and one partner, then sending small, private packs. The most interesting part of CPS.</p>
           <ol>
-            <li><b>Pro:</b> register a <b>new pair</b> → brew a dictionary from samples to grow a new generation → export a generation pack (<span class="mono">.cpgen</span>) for your partner.</li>
-            <li><b>Standard:</b> import the <span class="mono">.cpgen</span>, then pack with the pair dictionary — Efficient <span class="mono">.cpp2</span> / Secret <span class="mono">.cpp3</span> / Keyed <span class="mono">.cpp3l</span>.</li>
-            <li><b>Preview:</b> import generations and open pair packs.</li>
-            <li>Opening looks up the right dictionary by lineage ID and generation — old packs still open with old generations.</li>
+            <li><b>On Pro (the maker):</b> register a partner with <b>+ New pair</b> → pick sample files close to your real exchanges and press <b>Grow pair dictionary</b> → when grown, <b>Share dictionary</b> exports a <span class="mono">.cpgen</span> to send them.</li>
+            <li><b>On Standard (the sender):</b> import the received <span class="mono">.cpgen</span> with <b>Receive dictionary</b> → from then on, <b>Pack &amp; send</b> works for that pair. Three flavours — Efficient (<span class="mono">.cpp2</span>) / Secret (<span class="mono">.cpp3</span>) / Keyed (<span class="mono">.cpp3l</span>).</li>
+            <li><b>On Preview:</b> importing generations and opening pair packs works.</li>
+            <li>Opening picks the right dictionary automatically from the lineage and generation stamped on the pack. <b>Growing never breaks old packs</b> — old generations stay in the vault.</li>
           </ol>
+          <p style="margin:8px 0 0; font-size:.82rem; color:var(--sage)">If stuck: Keyed packs won't open without the key file. Hand the key over separately from the pack.</p>
           <div class="shot"><span class="cam">📷</span>Screenshot: Pairs tab with one entry in the ledger</div>
         </div>
 
         <div class="op">
           <h3>Workshop · Friend Key · Recipe Pack <span class="gtag">Pro</span></h3>
+          <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">What is this screen for? — Three tabs for makers: brew recipes, lock packs, and ship recipes with the pack.</p>
           <ol>
-            <li><b>Workshop:</b> brew Hot Cocoa / Coffee / Shake recipes from sample files into <span class="mono">.cpsdict</span>. Optional LLM assistance (bring your own key).</li>
-            <li><b>Friend Key:</b> create a limited-release pack (<span class="mono">.cpmn</span> + <span class="mono">menu</span>).</li>
-            <li><b>Recipe Pack:</b> create a self-contained <span class="mono">.cprp</span> — receivers open it with nothing installed.</li>
+            <li><b>Workshop:</b> feed it sample files (similar to what you'll compress) and it brews Hot Cocoa / Coffee / Shake recipes into <span class="mono">.cpsdict</span>. Optional LLM assistance (bring your own API key).</li>
+            <li><b>Friend Key:</b> creates a limited-release pack (<span class="mono">.cpmn</span> + <span class="mono">menu</span>) that only your friend can open.</li>
+            <li><b>Recipe Pack:</b> creates a self-contained <span class="mono">.cprp</span> — the kindest format to distribute, since receivers install nothing.</li>
           </ol>
           <div class="shot"><span class="cam">📷</span>Screenshot: Workshop with a finished brew log</div>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- DICTS -->
+  <section id="dicts">
+    <div class="wrap">
+      <p class="sec-label">Dictionaries</p>
+      <h2>What comes in the box</h2>
+      <p class="sub">Six Ice Cocoa dictionaries ship with every edition; five sample layers ship with Standard.</p>
+
+      <h3 style="font-family:'Zen Maru Gothic',sans-serif; color:var(--foam); font-size:1.1rem; margin:0 0 12px">Ice Cocoa built-in dictionaries (6 · all editions)</h3>
+      <table class="dict-table">
+        <tr><th>Name</th><th>File</th><th>Best for</th></tr>
+        <tr><td>Japanese text</td><td class="fn">jp-txt.zdict</td><td>Everyday Japanese — diaries, chat logs, fiction.</td></tr>
+        <tr><td>Japanese technical</td><td class="fn">jp-tech.zdict</td><td>Japanese specs and manuals with code mixed in.</td></tr>
+        <tr><td>English text</td><td class="fn">en-txt.zdict</td><td>Everyday English writing.</td></tr>
+        <tr><td>English technical</td><td class="fn">en-tech.zdict</td><td>English docs and READMEs.</td></tr>
+        <tr><td>Structured data</td><td class="fn">doc.zdict</td><td>JSON / YAML and other regular formats.</td></tr>
+        <tr><td>All-round <span class="pick">← when in doubt</span></td><td class="fn">all.zdict</td><td>The generalist for mixed content.</td></tr>
+      </table>
+      <p class="dict-note">Choosing is simple: <b style="color:var(--foam)">pick whatever is closest to your content</b>. A better match shrinks better. A mismatch never breaks anything — it just compresses a little worse.</p>
+
+      <h3 style="font-family:'Zen Maru Gothic',sans-serif; color:var(--foam); font-size:1.1rem; margin:34px 0 12px">Sample layers (11 · bundled with Standard)</h3>
+      <p class="dict-note" style="margin:0 0 14px">Two families: <b style="color:var(--foam)">Hot Cocoa recipes used one at a time</b>, and <b style="color:var(--foam)">Shake ingredients meant to be stacked</b>.</p>
+
+      <table class="dict-table">
+        <tr><th colspan="2" style="color:var(--caramel)">For Hot Cocoa (pick one)</th></tr>
+        <tr><td class="fn">cocoa_sample.cpsdict</td><td>A starter sample — try the mechanics first.</td></tr>
+        <tr><td class="fn">en_cocoa_ver.1.cpsdict</td><td><b>English Hot Cocoa</b> (99,180 phrases) — modern tech, conversational and web English.</td></tr>
+        <tr><td class="fn">ja_cocoa_ver.1.cpsdict</td><td><b>Japanese Hot Cocoa</b> (103,184 phrases) — modern technical and conversational Japanese.</td></tr>
+        <tr><th colspan="2" style="color:var(--caramel)">For Coffee (structure recipe)</th></tr>
+        <tr><td class="fn">struct_coffee_ver.1.cpsdict</td><td><b>Log-oriented Coffee</b> (48,480 phrases) — server/access logs where the same line-shape repeats. Not for single files or prose.</td></tr>
+        <tr><th colspan="2" style="color:var(--sage)">Shake ingredients (stack them)</th></tr>
+        <tr><td class="fn">ja_meishi_ver.1.cpsdict</td><td>Japanese <b>nouns</b> — the main ingredient of the Japanese shake.</td></tr>
+        <tr><td class="fn">ja_doshi_ver.1.cpsdict</td><td>Japanese <b>verbs</b>.</td></tr>
+        <tr><td class="fn">ja_joshi_ver.1.cpsdict</td><td>Japanese <b>particles</b> (は, が, を…).</td></tr>
+        <tr><td class="fn">ja_setsuzoku_ver.1.cpsdict</td><td>Japanese <b>conjunctions</b>.</td></tr>
+        <tr><td class="fn">en_phrase_ver.1.cpsdict</td><td>English <b>set phrases</b> — first layer of the English shake.</td></tr>
+        <tr><td class="fn">en_word_ver.1.cpsdict</td><td>English <b>words</b> — second layer.</td></tr>
+        <tr><td class="fn">en_function_ver.1.cpsdict</td><td>English <b>function words</b> (the / of / and…) — third layer.</td></tr>
+      </table>
+      <p class="dict-note">
+        Installing is always the same: Recipe Shelf → Add recipe → pick from <span class="mono">sample_layers\</span>.
+        Use Hot Cocoa recipes one at a time; stack shake ingredients of the same language (4 Japanese layers, 3 English).
+        Pro ships no samples — brewing your own in the Workshop is the Pro way.
+      </p>
+    </div>
+  </section>
+
+  <!-- WORDS -->
+  <section id="words">
+    <div class="wrap">
+      <p class="sec-label">Glossary</p>
+      <h2>The hard words, softly</h2>
+      <p class="sub">Q&amp;A for the vocabulary that shows up in CPS.</p>
+      <div class="qa">
+        <div class="item">
+          <p class="qq">What is a dictionary?</p>
+          <p class="aa">A lookup table that swaps frequent words and patterns for short codes. The closer the dictionary matches your content, the smaller it packs — same trick as human shorthand.</p>
+        </div>
+        <div class="item">
+          <p class="qq">Recipes? Layers? How do they differ from dictionaries?</p>
+          <p class="aa">All members of the same family. Hot Cocoa knows word substitutions, Coffee knows line shapes (for log-like data where the same shape repeats), Shake knows long runs. They can be stacked, hence "layers". On disk, they're all <span class="mono">.cpsdict</span> files.</p>
+        </div>
+        <div class="item">
+          <p class="qq">What is a pair "generation"?</p>
+          <p class="aa">A version number that goes up each time the pair dictionary is grown. Newer generations know your exchanges better. Old packs open with old generations, so <b>growing never locks you out of past packs</b>.</p>
+        </div>
+        <div class="item">
+          <p class="qq">Is "Secret" encryption?</p>
+          <p class="aa">No. It's limited disclosure — hiding content and patterns from outside eyes, with the pair dictionary acting as the shared key. For a message you truly want locked, use Keyed and pass the key file separately.</p>
+        </div>
+        <div class="item">
+          <p class="qq">What's the point of the Rugged pack?</p>
+          <p class="aa">A container that resists breakage: if parts get lost or corrupted in storage or transfer, error correction can often restore them. For long-term storage and precious hand-offs.</p>
+        </div>
+        <div class="item">
+          <p class="qq">Does compressing delete or degrade my file?</p>
+          <p class="aa">Neither. Your original stays untouched; a <span class="mono">.cps</span> simply appears next to it. Unpacking returns a byte-identical file (lossless).</p>
+        </div>
       </div>
     </div>
   </section>

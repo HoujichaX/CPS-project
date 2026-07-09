@@ -170,6 +170,30 @@
   .note{background:var(--panel-2); border:1px solid var(--line); border-left:3px solid var(--caramel); border-radius:0 10px 10px 0; padding:16px 20px; font-size:.9rem; color:#d3c6b3; margin-top:26px}
   .note b{color:var(--cream)}
 
+  /* ---- quick start ---- */
+  .qs{counter-reset:qs; display:flex; flex-direction:column; gap:12px}
+  .q{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px 18px 16px 62px; position:relative; font-size:.95rem; color:#d3c6b3}
+  .q::before{counter-increment:qs; content:counter(qs); position:absolute; left:18px; top:50%; transform:translateY(-50%); width:30px; height:30px; border-radius:50%; background:var(--caramel); color:var(--espresso); font-family:"Zen Maru Gothic",sans-serif; font-weight:900; display:flex; align-items:center; justify-content:center}
+  .q b{color:var(--foam)}
+  .q .safe{display:block; margin-top:4px; font-size:.8rem; color:var(--sage)}
+
+  /* ---- bundled dictionaries ---- */
+  .dict-table{width:100%; border-collapse:collapse; font-size:.9rem}
+  .dict-table th{font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); text-align:left; padding:8px 12px; border-bottom:1px solid var(--line)}
+  .dict-table td{padding:11px 12px; border-bottom:1px solid var(--line-soft); color:#d3c6b3; vertical-align:top}
+  .dict-table td:first-child{font-weight:700; color:var(--foam); white-space:nowrap}
+  .dict-table .fn{font-family:"IBM Plex Mono",monospace; font-size:.76rem; color:var(--caramel)}
+  .dict-table .pick{color:var(--sage); font-size:.8rem}
+  .dict-note{margin-top:14px; font-size:.86rem; color:var(--mute)}
+
+  /* ---- glossary ---- */
+  .qa{display:flex; flex-direction:column; gap:12px}
+  .qa .item{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:18px 20px}
+  .qa .qq{font-family:"Zen Maru Gothic",sans-serif; font-weight:700; color:var(--foam); margin:0 0 6px; font-size:1rem}
+  .qa .qq::before{content:"Q. "; color:var(--caramel)}
+  .qa .aa{margin:0; font-size:.92rem; color:#d3c6b3}
+  .qa .aa::before{content:"A. "; color:var(--sage); font-weight:700}
+
   /* ---- operation guide ---- */
   .tabflow{display:flex; flex-direction:column; gap:14px}
   .op{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:20px 22px}
@@ -192,12 +216,11 @@
       <span class="tag">Cocoa Pack Service</span>
     </div>
     <nav>
+      <a href="#quick">はじめて</a>
       <a href="#menu">メニュー</a>
-      <a href="#grades">グレード</a>
-      <a href="#use">使い方</a>
       <a href="#howto">操作ガイド</a>
-      <a href="#jar">瓶づめ</a>
-      <a href="#pair">ペアリング</a>
+      <a href="#dicts">同梱辞書</a>
+      <a href="#words">ことば</a>
       <a href="#start">入手する</a>
       <a href="en.html" style="color:var(--caramel); border:1px solid var(--caramel-deep); border-radius:5px; padding:2px 9px">EN</a>
     </nav>
@@ -223,14 +246,30 @@
     <div class="steam" aria-hidden="true"><i></i><i></i><i></i></div>
   </section>
 
+  <!-- QUICK START -->
+  <section id="quick">
+    <div class="wrap">
+      <p class="sec-label">はじめて</p>
+      <h2>まずは5分、ためしに一杯</h2>
+      <p class="sub">むずかしいことは全部あとまわし。いちばん簡単な一杯で「詰めて、戻す」を一周してみましょう。元のファイルは消えないので、安心して試せます。</p>
+      <div class="qs">
+        <div class="q"><b>CPS Preview を入れる</b> — Microsoft Store で「CPS Preview」を検索してインストール(無料)。</div>
+        <div class="q"><b>ファイルをドラッグ</b> — アプリを開いて「圧縮」タブに、適当なテキストファイルや画像を1つドラッグ&ドロップ。<span class="safe">✓ 元のファイルはそのまま残ります。コピーが詰められるだけ。</span></div>
+        <div class="q"><b>そのまま「梱包する」</b> — 方式は最初から「ミネラルウォーター」が選ばれています。押して、保存先を決めるだけ。<span class="mono">.cps</span> ができたら成功。</div>
+        <div class="q"><b>戻してみる</b> — 「開封」タブにさっきの <span class="mono">.cps</span> をドラッグして「開封する」。元とまったく同じファイルが戻ってきます。</div>
+        <div class="q"><b>次の一杯へ</b> — 同じ手順で、今度は方式を「アイスココア」にして辞書「全部入り」を選んでみましょう。中身に合う辞書ほど小さくなるのが分かります。</div>
+      </div>
+    </div>
+  </section>
+
   <!-- MENU -->
   <section id="menu">
     <div class="wrap">
       <p class="sec-label">メニュー</p>
       <h2>5つの詰め方から選ぶ</h2>
       <p class="sub">
-        どれも「ファイルを選ぶ → 一杯を選ぶ → 詰める」だけ。辞書やレシピが要る一杯は、
-        先に「レイヤー管理」でインストールしておきます。「こく」は圧縮の効き目のイメージで、実際はデータによって変わります。
+        どれも「ファイルを選ぶ → 一杯を選ぶ → 詰める」だけ。<b style="color:var(--foam)">迷ったら水、慣れたらアイスココア</b>。それで十分です。
+        ココアから先は「レシピ」という下ごしらえが要る、こだわりの一杯(くわしくは下の操作ガイドで)。「こく」は圧縮の効き目のイメージで、実際はデータによって変わります。
       </p>
 
       <div class="menu-grid">
@@ -273,7 +312,7 @@
             <p class="dn">コーヒー</p>
             <span class="temp">HOT · 構造</span>
           </div>
-          <p class="desc">行の「形」を覚えたレシピで詰める一杯。ログや台帳のような整った構造に効きます。</p>
+          <p class="desc">行の「形」を覚えて詰める一杯。ログのように<b>同じ形の行が数値だけ変えて並ぶ</b>データ専用。日記や普通の文章には不向き。</p>
           <div class="koku"><span class="kl">こく</span>
             <span class="cups"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span></div>
           <div class="chips"><span class="chip">要レシピ</span><span class="chip">単一ファイル専用</span><span class="chip grade">Standard 以上</span></div>
@@ -370,7 +409,7 @@
       </div>
       <div class="note">
         <b>ココア / コーヒーを使う前に:</b> 「レシピ棚 → レシピを追加」で <span class="mono">.cpsdict</span> をインストールしてください。
-        Standard には同梱の <span class="mono">sample_layers\</span> (日本語の品詞別4種)が入っています。インストール先は <span class="mono">%APPDATA%\cps\layers</span> です。
+        Standard には同梱の <span class="mono">sample_layers\</span> (お試し用11個)が入っています。インストール先は <span class="mono">%APPDATA%\cps\layers</span> です。
       </div>
     </div>
   </section>
@@ -473,71 +512,162 @@
   <section id="howto">
     <div class="wrap">
       <p class="sec-label">操作ガイド</p>
-      <h2>タブごとの操作手順</h2>
-      <p class="sub">サイドバーのタブに沿って。Preview は 圧縮/開封/ペア の3つ、Standard は＋レシピ棚/受け取り、Pro はさらにレシピ工房・鍵かけ・レシピパックが加わります。</p>
+      <h2>タブごとの、ていねいな手順</h2>
+      <p class="sub">サイドバーのタブに沿って、上から順に。各タブの「これは何をする画面？」から読めば迷いません。</p>
       <div class="tabflow">
 
         <div class="op">
           <h3>圧縮 <span class="gtag">全グレード</span></h3>
+          <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">これは何をする画面？ — ファイルを一杯に詰めて <span class="mono">.cps</span> を作る画面。いちばんよく使います。</p>
           <ol>
-            <li><b>ファイルを選ぶ</b> — 「参照」またはウィンドウへドラッグ&ドロップ(フォルダも可)。</li>
-            <li><b>方式を選ぶ</b> — 上部のタブから一杯を選択。アイスココアは内蔵辞書、ココア/コーヒー/シェイクはインストール済みレシピをサブ選択。</li>
-            <li>大事なデータなら<b>「瓶づめ(CPSV)」にチェック</b> — RSで守る頑丈梱包に。</li>
-            <li><b>「梱包する」</b>を押して保存先を決めると <span class="mono">.cps</span>(瓶づめなら <span class="mono">.cpsv</span>)が完成。</li>
+            <li><b>ファイルを選ぶ</b> — 「参照」を押すか、ウィンドウのどこでもいいのでドラッグ&ドロップ。フォルダごとでもOK(自動でひとまとめになります)。</li>
+            <li><b>一杯を選ぶ</b> — 上部の方式タブから。迷ったら「ミネラルウォーター」。アイスココアにすると辞書の選択が出るので、中身に近いものを(分からなければ「全部入り」)。</li>
+            <li>ココア/コーヒー/シェイクは、インストール済みのレシピを選ぶ欄が出ます。<b>一覧が空ならまだレシピが入っていない</b>合図 — 先に「レシピ棚」へ。</li>
+            <li>大切なデータなら<b>「瓶づめ」にチェック</b>。壊れても直せる頑丈な容器(<span class="mono">.cpsv</span>)になります。</li>
+            <li><b>「梱包する」</b>を押して保存先を決めたら完成。ログに「→ ○○ B」と縮んだサイズが出ます。</li>
           </ol>
+          <p style="margin:8px 0 0; font-size:.82rem; color:var(--sage)">つまずいたら: 何も起きない→ファイルを選び直す。「レシピがありません」→レシピ棚でインストール。</p>
           <div class="shot"><span class="cam">📷</span>スクリーンショット: 圧縮タブ(方式タブとファイル選択が見える状態)</div>
         </div>
 
         <div class="op">
           <h3>開封 <span class="gtag">全グレード</span></h3>
+          <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">これは何をする画面？ — <span class="mono">.cps</span> / <span class="mono">.cpsv</span> を元のファイルに戻す画面。</p>
           <ol>
-            <li><span class="mono">.cps</span> / <span class="mono">.cpsv</span> を選ぶ(ドロップ可)。</li>
-            <li><b>「開封する」</b>を押す — 方式は中身から自動判定。拡張子が変わっていても開けます。</li>
-            <li>瓶づめは一部が欠けていても RS 誤り訂正で復元を試みます。</li>
+            <li>ファイルを選ぶ(ドラッグでもOK)。</li>
+            <li><b>「開封する」</b>を押すだけ。どの一杯で詰めたかは<b>自動で判定</b>されるので、覚えていなくて大丈夫。拡張子を変えられていても開きます。</li>
+            <li>瓶づめ(<span class="mono">.cpsv</span>)は、途中が欠けたり化けたりしていても誤り訂正で復元を試みます。</li>
           </ol>
+          <p style="margin:8px 0 0; font-size:.82rem; color:var(--sage)">つまずいたら: 「辞書が見つかりません」→そのパックに使われたレシピや世代辞書がまだ入っていません。作った人に聞くか、受け取り/ペアで取り込みを。</p>
           <div class="shot"><span class="cam">📷</span>スクリーンショット: 開封タブ(完了ログが出た状態)</div>
         </div>
 
         <div class="op">
           <h3>レシピ棚 <span class="gtag">Standard / Pro</span></h3>
+          <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">これは何をする画面？ — ココア/コーヒー/シェイク用の「レシピ」(辞書ファイル)を入れておく棚。</p>
           <ol>
-            <li><b>「レシピを追加」</b>で <span class="mono">.cpsdict</span> を選ぶとインストール(保存先: <span class="mono">%APPDATA%\cps\layers</span>)。</li>
-            <li>一覧で入っているレシピを確認。ココア/コーヒー/シェイクのサブ選択に反映されます。</li>
-            <li>Standard には同梱の <span class="mono">sample_layers\</span>(日本語の品詞別4種)があります。まずこれを入れると試せます。</li>
+            <li><b>「レシピを追加」</b>を押して <span class="mono">.cpsdict</span> ファイルを選ぶと、棚に入ります(保存先: <span class="mono">%APPDATA%\cps\layers</span>)。</li>
+            <li>入れたレシピは、圧縮タブのココア/コーヒー/シェイクの選択欄に現れます。</li>
+            <li>最初は Standard 同梱の <span class="mono">sample_layers\</span> から入れてみましょう(中身は下の「同梱辞書」で説明)。</li>
           </ol>
           <div class="shot"><span class="cam">📷</span>スクリーンショット: レシピ棚(一覧に数件入った状態)</div>
         </div>
 
         <div class="op">
           <h3>受け取り <span class="gtag">Standard / Pro</span></h3>
+          <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">これは何をする画面？ — 人からもらった特別なパックを開ける窓口。</p>
           <ol>
-            <li><b>自己完結パック(<span class="mono">.cprp</span>)</b> — 選んで開くだけ。レシピ同梱なので何も入れずに開けます。</li>
-            <li><b>フレンドkey</b> — <span class="mono">menu</span> と <span class="mono">.cpmn</span> の2ファイルを指定して開封。</li>
+            <li><b>自己完結パック(<span class="mono">.cprp</span>)</b>をもらったら — 選んで開くだけ。レシピが同梱されているので、何も準備が要りません。</li>
+            <li><b>フレンドkey</b> をもらったら — <span class="mono">.cpmn</span>(中身)と <span class="mono">menu</span>(鍵情報)の<b>2つセット</b>で届きます。両方を指定して開封。片方だけでは開きません。</li>
           </ol>
           <div class="shot"><span class="cam">📷</span>スクリーンショット: 受け取りタブ</div>
         </div>
 
         <div class="op">
           <h3>ペア <span class="gtag">全グレード(できることは段階制)</span></h3>
+          <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">これは何をする画面？ — 特定の相手と「二人だけの辞書」を育てて、小さく・ひそかに送り合う画面。CPSのいちばん面白いところ。</p>
           <ol>
-            <li><b>Pro:</b> 「新規ペア」で相手を登録 → 素材から辞書を焼いて世代を育てる → 世代パック(<span class="mono">.cpgen</span>)を書き出して相手へ。</li>
-            <li><b>Standard:</b> 受け取った <span class="mono">.cpgen</span> を取り込み、そのペア辞書で梱包(効率 <span class="mono">.cpp2</span> / ひみつ <span class="mono">.cpp3</span> / かぎつき <span class="mono">.cpp3l</span>)。</li>
-            <li><b>Preview:</b> 世代辞書を取り込んでペアパックを開くところまで。</li>
-            <li>開封は系譜ID/世代から保管庫の辞書を自動で引きます。古いパックも旧世代で開けます。</li>
+            <li><b>Pro の人(作る側):</b> 左下の「＋ 新規ペア」で相手の名前を登録 → 二人のやり取りに近い素材ファイルを選んで「このペアの辞書を育てる」→ 育ったら「辞書を渡す」で <span class="mono">.cpgen</span> を書き出して相手に送る。</li>
+            <li><b>Standard の人(受け取って送る側):</b> 「辞書を受け取る」でもらった <span class="mono">.cpgen</span> を取り込む → 以降そのペアあてに「梱包して送る」が使えます。送り方は3つ — おまかせ(効率・<span class="mono">.cpp2</span>) / ひみつ(<span class="mono">.cpp3</span>) / かぎつき(<span class="mono">.cpp3l</span>)。</li>
+            <li><b>Preview の人:</b> 辞書の取り込みと、ペアパックを開くところまでできます。</li>
+            <li>開くときは、パックに刻まれた系譜と世代から自動で正しい辞書が選ばれます。<b>辞書を育てても、昔のパックはちゃんと開きます</b>(古い世代が保管されているため)。</li>
           </ol>
+          <p style="margin:8px 0 0; font-size:.82rem; color:var(--sage)">つまずいたら: 「かぎつき」は鍵ファイルがないと開きません。鍵はパックとは別の方法で受け渡しを。</p>
           <div class="shot"><span class="cam">📷</span>スクリーンショット: ペアタブ(台帳に1件ある状態)</div>
         </div>
 
         <div class="op">
           <h3>レシピ工房・鍵かけ・レシピパック <span class="gtag">Pro</span></h3>
+          <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">これは何をする画面？ — レシピを自作して配る、作り手のための3タブ。</p>
           <ol>
-            <li><b>レシピ工房:</b> ホットココア/コーヒー/シェイクの3種を、素材ファイルから焼いて <span class="mono">.cpsdict</span> に。LLM支援(BYOK)も任意で。</li>
-            <li><b>鍵かけ:</b> フレンドkeyで限定公開パック(<span class="mono">.cpmn</span>+<span class="mono">menu</span>)を作成。</li>
-            <li><b>レシピパック:</b> レシピ同梱の <span class="mono">.cprp</span> を作成 — 受け取る側は何も入れずに開けます。</li>
+            <li><b>レシピ工房:</b> 素材ファイル(圧縮したいものに近い内容)を渡すと、ホットココア/コーヒー/シェイクのレシピを焼いて <span class="mono">.cpsdict</span> にしてくれます。LLM に手伝わせる設定もあります(自分のAPIキーを使う方式・任意)。</li>
+            <li><b>鍵かけ:</b> 相手だけが開ける限定公開パック(<span class="mono">.cpmn</span>+<span class="mono">menu</span>)を作ります。</li>
+            <li><b>レシピパック:</b> レシピを同梱した <span class="mono">.cprp</span> を作ります。相手は何も入れずに開けるので、配布にいちばん親切。</li>
           </ol>
           <div class="shot"><span class="cam">📷</span>スクリーンショット: レシピ工房(焼き上がりログ)</div>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- DICTS -->
+  <section id="dicts">
+    <div class="wrap">
+      <p class="sec-label">同梱辞書</p>
+      <h2>最初から入っている辞書たち</h2>
+      <p class="sub">アイスココア用の6種は全グレードに、お試しレイヤー5個は Standard に同梱されています。</p>
+
+      <h3 style="font-family:'Zen Maru Gothic',sans-serif; color:var(--foam); font-size:1.1rem; margin:0 0 12px">アイスココアの内蔵辞書(6種・全グレード)</h3>
+      <table class="dict-table">
+        <tr><th>名前</th><th>ファイル</th><th>向いている中身</th></tr>
+        <tr><td>日本語口語</td><td class="fn">jp-txt.zdict</td><td>日記・チャットログ・小説など、ふだんの日本語。</td></tr>
+        <tr><td>日本語技術文書</td><td class="fn">jp-tech.zdict</td><td>仕様書・マニュアル・コードが混ざった日本語。</td></tr>
+        <tr><td>英語口語</td><td class="fn">en-txt.zdict</td><td>ふだんの英語の文章。</td></tr>
+        <tr><td>英語技術文書</td><td class="fn">en-tech.zdict</td><td>英語のドキュメントやREADME。</td></tr>
+        <tr><td>構造データ</td><td class="fn">doc.zdict</td><td>JSON / YAML など、形の決まったデータ。</td></tr>
+        <tr><td>全部入り <span class="pick">← 迷ったらこれ</span></td><td class="fn">all.zdict</td><td>いろいろ混ざった内容向けのオールラウンダー。</td></tr>
+      </table>
+      <p class="dict-note">選び方はシンプルで、<b style="color:var(--foam)">中身にいちばん近いものを選ぶだけ</b>。合う辞書ほどよく縮みます。外しても壊れることはなく、少し縮みが悪くなるだけなので気軽に。</p>
+
+      <h3 style="font-family:'Zen Maru Gothic',sans-serif; color:var(--foam); font-size:1.1rem; margin:34px 0 12px">お試しレイヤー(11個・Standard 同梱)</h3>
+      <p class="dict-note" style="margin:0 0 14px">大きく分けて、<b style="color:var(--foam)">1つで効かせるココア用</b>と、<b style="color:var(--foam)">重ねて効かせるシェイク素材</b>の2系統が入っています。</p>
+
+      <table class="dict-table">
+        <tr><th colspan="2" style="color:var(--caramel)">ココア用(1つ選んで使う)</th></tr>
+        <tr><td class="fn">cocoa_sample.cpsdict</td><td>ココア方式のお試しサンプル。まず動きを見たいときに。</td></tr>
+        <tr><td class="fn">en_cocoa_ver.1.cpsdict</td><td><b>英語のココア</b>(99,180語)。技術文書・会話・Web系の現代英語に。</td></tr>
+        <tr><td class="fn">ja_cocoa_ver.1.cpsdict</td><td><b>日本語のココア</b>(103,184語)。技術文書・解説・会話系の現代日本語に。</td></tr>
+        <tr><th colspan="2" style="color:var(--caramel)">コーヒー用(構造レシピ)</th></tr>
+        <tr><td class="fn">struct_coffee_ver.1.cpsdict</td><td><b>ログ向けコーヒー</b>(48,480語)。サーバーログ・アクセスログなど「同じ形の行が繰り返す」データに。単発ファイルや散文には効きません。</td></tr>
+        <tr><th colspan="2" style="color:var(--sage)">シェイク素材(重ねて使う)</th></tr>
+        <tr><td class="fn">ja_meishi_ver.1.cpsdict</td><td>日本語の<b>名詞</b>。日本語シェイクの主材料。</td></tr>
+        <tr><td class="fn">ja_doshi_ver.1.cpsdict</td><td>日本語の<b>動詞</b>。</td></tr>
+        <tr><td class="fn">ja_joshi_ver.1.cpsdict</td><td>日本語の<b>助詞</b>(「は」「が」「を」…)。</td></tr>
+        <tr><td class="fn">ja_setsuzoku_ver.1.cpsdict</td><td>日本語の<b>接続</b>のことば(「しかし」「そして」…)。</td></tr>
+        <tr><td class="fn">en_phrase_ver.1.cpsdict</td><td>英語の<b>定型句</b>。英語シェイクの1層目。</td></tr>
+        <tr><td class="fn">en_word_ver.1.cpsdict</td><td>英語の<b>単語</b>。2層目。</td></tr>
+        <tr><td class="fn">en_function_ver.1.cpsdict</td><td>英語の<b>機能語</b>(the / of / and …)。3層目。</td></tr>
+      </table>
+      <p class="dict-note">
+        入れ方はどれも同じ:「レシピ棚 → レシピを追加」で <span class="mono">sample_layers\</span> から選ぶだけ。
+        ココア用は1つ選んで使い、シェイク素材は同じ言語のものを重ねて使います(日本語4層・英語3層)。
+        Pro にはサンプルは同梱されていません — 工房で自分のデータから焼くのが Pro の流儀です。
+      </p>
+    </div>
+  </section>
+
+  <!-- WORDS -->
+  <section id="words">
+    <div class="wrap">
+      <p class="sec-label">ことば</p>
+      <h2>むずかしい言葉を、やさしく</h2>
+      <p class="sub">CPSに出てくる言葉の意味を、Q&amp;Aで。</p>
+      <div class="qa">
+        <div class="item">
+          <p class="qq">辞書って何？</p>
+          <p class="aa">「よく出てくる言葉や並び」を短い符号に置き換えるための対応表です。中身に合った辞書を使うほど、同じデータがぐっと小さくなります。人間の速記と同じ理屈。</p>
+        </div>
+        <div class="item">
+          <p class="qq">レシピとかレイヤーって何？辞書と違うの？</p>
+          <p class="aa">どれも辞書の仲間です。ココアは「言葉の置き換え」、コーヒーは「行の形」(ログのように同じ型の行が並ぶデータ向け)、シェイクは「長い塊」を覚えたレシピ。重ねて効かせられるので「レイヤー」とも呼びます。ファイルとしてはぜんぶ <span class="mono">.cpsdict</span> です。</p>
+        </div>
+        <div class="item">
+          <p class="qq">ペアの「世代」って何？</p>
+          <p class="aa">二人の辞書を育てるたびに増える「版」の番号です。世代が進むほど、二人のやり取りに詳しい辞書になります。古いパックは古い世代の辞書で開かれるので、<b>育てたせいで昔の荷物が開かなくなることはありません</b>。</p>
+        </div>
+        <div class="item">
+          <p class="qq">「ひみつ」は暗号なの？</p>
+          <p class="aa">暗号ではありません。中身と並びのパターンを外から見えにくくする「限定開示」です。ペアの辞書そのものが合鍵の役割をします。本気で守りたい1通は「かぎつき」にして、鍵ファイルを別の方法で渡してください。</p>
+        </div>
+        <div class="item">
+          <p class="qq">瓶づめって何がうれしいの？</p>
+          <p class="aa">保存中や受け渡しでファイルの一部が欠けたり化けたりしても、誤り訂正の力で元に戻せる可能性が高い、割れにくい容器です。長期保存や大事なデータの受け渡しに。</p>
+        </div>
+        <div class="item">
+          <p class="qq">圧縮すると元のファイルは消える？中身は劣化する？</p>
+          <p class="aa">どちらもありません。元のファイルはそのまま残り、<span class="mono">.cps</span> がもう1つできるだけです。開封すれば1バイトも違わない元のファイルが戻ります(可逆圧縮)。</p>
+        </div>
       </div>
     </div>
   </section>
