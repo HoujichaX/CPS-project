@@ -221,6 +221,7 @@
       <a href="#howto">How-To</a>
       <a href="#dicts">Dictionaries</a>
       <a href="#words">Glossary</a>
+      <a href="#tips">Recipe Tips</a>
       <a href="#start">Get CPS</a>
       <a href="index.html" style="color:var(--caramel); border:1px solid var(--caramel-deep); border-radius:5px; padding:2px 9px">日本語</a>
     </nav>
@@ -649,6 +650,53 @@
       <div class="note">
         <b>Secret is not encryption.</b> It is limited disclosure — hiding plaintext and patterns. For a message you truly want locked down, use Keyed (<span class="mono">.cpp3l</span>) and pass the key another way.
         Creating pairs and growing dictionaries is Pro; sending with a received dictionary is Standard; importing and opening works even in the free Preview.
+      </div>
+    </div>
+  </section>
+
+  <!-- TIPS -->
+  <section id="tips">
+    <div class="wrap">
+      <p class="sec-label">Recipe making</p>
+      <h2>Baking recipes that actually work</h2>
+      <p class="sub">Measured guidance for the Pro Workshop — how to bake recipes that really shrink things. Most important first.</p>
+      <div class="qa">
+
+        <div class="item">
+          <p class="qq">The golden rule — the ingredients are everything</p>
+          <p class="aa">Recipe quality is decided by <b>what you feed it</b>, not the algorithm. Use content <b>close to what you'll compress</b>, in <b>bulk</b>. In our tests, a cocoa baked from 155 KB of same-genre documents beat plain Water even on unseen files; one baked from a 61 KB grab-bag had <b>zero effect</b>. Small and messy fails; homogeneous and plentiful wins. More is better — think hundreds of KB and up.</p>
+        </div>
+
+        <div class="item">
+          <p class="qq">Pick the method to match the data</p>
+          <p class="aa"><b>Ordinary documents and articles → Hot Cocoa</b> (word substitution). <b>Logs where the same line-shape repeats with changing numbers → Coffee</b> (line templates). <b>Long boilerplate blocks (signatures, headers) recurring far apart → Shake</b> (chunk substitution). And know when to abstain: chat-style data of short unique messages resists substitution recipes — <b>plain Water or Ice Cocoa compresses it better</b>.</p>
+        </div>
+
+        <div class="item">
+          <p class="qq">Cocoa — the forgiving cup</p>
+          <p class="aa">Cocoa doesn't substitute; it <b>melts the dictionary into the compressor as context</b>. A mismatched dictionary costs almost nothing; a matched one wins big. Redundant phrases in the dictionary do no harm, so don't fuss — just gather same-genre material. Bigger isn't endlessly better either: gains <b>plateau</b> (the default 256 KB–1 MB is usually plenty).</p>
+        </div>
+
+        <div class="item">
+          <p class="qq">Coffee — bundle files so one-off structures become patterns</p>
+          <p class="aa">A structure like an email header appears once per message, so a single file can't teach it. But <b>bundle dozens of same-format files</b> and it appears dozens of times — now it's a learnable template. Coffee's ingredient is "a stack of files in the same format": logs, ledgers, uniform records. Not single files, not prose.</p>
+        </div>
+
+        <div class="item">
+          <p class="qq">Shake &amp; personal recipes — big dictionary, small data</p>
+          <p class="aa">The winning pattern: <b>hand over a large dictionary once, then send small data many times</b>. A long chunk stored in the dictionary shrinks to one reference no matter how far apart it recurs. In our tests, a personal recipe baked from a mail archive improved compression by <b>26%</b> (signatures and boilerplate did the work). If the data itself is large, the compressor finds the repeats on its own and the recipe loses its job — which is exactly why pair dictionaries shine for two people exchanging many small messages.</p>
+        </div>
+
+        <div class="item">
+          <p class="qq">Advanced settings — the only knobs worth touching</p>
+          <p class="aa">Three knobs in the Workshop. <b>Min/max length</b> bound the phrases collected (default 4–64). <b>Frequency</b> is "how many occurrences before adoption" (default 3; lower it and vocabulary grows, but coincidences creep in). For mail-like data with long far-apart boilerplate, dropping frequency to 2 and allowing longer phrases is the classic move. When unsure, defaults are fine.</p>
+        </div>
+
+        <div class="item">
+          <p class="qq">Don't worry about time — baking is slow, opening is always fast</p>
+          <p class="aa">Take your time baking and packing (they're one-time jobs). <b>Unpacking speed is unaffected by dictionary size — always fast.</b> So the right way to use CPS: bake a good recipe slowly, pack carefully, and the receiver opens it in an instant. A slow bake is quality, not a problem.</p>
+        </div>
+
       </div>
     </div>
   </section>
