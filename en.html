@@ -461,7 +461,14 @@
           <p style="margin:0 0 4px; font-size:.88rem; color:var(--mute)">What is this screen for? — Growing a dictionary that belongs to just you and one partner, then sending small, private packs. The most interesting part of CPS.</p>
           <ol>
             <li><b>On Pro (the maker):</b> register a partner with <b>+ New pair</b> → pick sample files close to your real exchanges and press <b>Grow pair dictionary</b> → when grown, <b>Share dictionary</b> exports a <span class="mono">.cpgen</span> to send them.</li>
-            <li><b>On Standard (the sender):</b> import the received <span class="mono">.cpgen</span> with <b>Receive dictionary</b> → from then on, <b>Pack &amp; send</b> works for that pair. Three flavours — Efficient (<span class="mono">.cpp2</span>) / Secret (<span class="mono">.cpp3</span>) / Keyed (<span class="mono">.cpp3l</span>).</li>
+            <li><b>On Standard (receive &amp; send):</b> import the received <span class="mono">.cpgen</span> with "Receive dictionary" — then "Pack &amp; send" to that pair becomes available. Three ways to send:
+              <ul style="margin:6px 0 0; padding-left:18px; line-height:1.7">
+                <li><b>Auto (efficient)</b> — packs the smallest, ordinary way (<span class="mono">.cpp2</span>). When unsure, pick this.</li>
+                <li><b>Secret (private)</b> — only someone holding the pair dictionary can open it (<span class="mono">.cpp3</span>). Not encryption.</li>
+                <li><b>Keyed (per-message key)</b> — Secret plus one extra key for that single pack (<span class="mono">.cpp3l</span>); hand the key file over separately.</li>
+              </ul>
+            </li>
+            <li><b>Pro has one more: "Hoard (self-archive)"</b> — a preset for <b>growing</b>, not sending. It keeps a larger learning pool so you can fatten a self-to-self backup pair over time (growing is Pro-only, so this option only appears on Pro).</li>
             <li><b>On Preview:</b> import generations and open pair packs (Keyed too, with the key file). No compressing or sending with the pair dictionary.</li>
             <li>Opening picks the right dictionary automatically from the lineage and generation stamped on the pack. <b>Growing never breaks old packs</b> — old generations stay in the vault.</li>
           </ol>
