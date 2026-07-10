@@ -469,6 +469,15 @@
               </ul>
             </li>
             <li><b>Pro has one more: "Hoard (self-archive)"</b> — a preset for <b>growing</b>, not sending. It keeps a larger learning pool so you can fatten a self-to-self backup pair over time (growing is Pro-only, so this option only appears on Pro).</li>
+            <li><b>When to grow, when to stop:</b>
+              <ul style="margin:6px 0 0; padding-left:18px; line-height:1.7">
+                <li><b>What "growing" actually costs</b> — sending the new generation dictionary (<span class="mono">.cpgen</span>, ~256 KB by default) to your partner again. The packs themselves never get heavier as generations advance.</li>
+                <li><b>Grow when</b> — the pair is young (the first few generations gain the most), or the topic of your exchanges shifts (new project, new vocabulary). Packs shrinking less than they used to is the "dictionary is stale" signal.</li>
+                <li><b>Stop when</b> — new generations stop improving the ratio: the dictionary is saturated (our mail tests plateaued around 256 KB). Just stop growing — <b>no "off switch" needed</b>. The latest generation your partner holds keeps working forever, at zero further transfer cost.</li>
+                <li><b>Rule of thumb</b> — grow only if the total savings on future packs will exceed the size of the generation you'd send. No need to grow per message; batching dozens of exchanges into one new generation is plenty. On Pro, <b>pick a folder to bundle everything inside into a single new generation at once</b>.</li>
+                <li><b>Distributing to many people?</b> — pair dictionaries are strictly two-person. For wider distribution use a <b>Recipe Pack (<span class="mono">.cprp</span>)</b> or a plain <span class="mono">.cps</span> instead.</li>
+              </ul>
+            </li>
             <li><b>On Preview:</b> import generations and open pair packs (Keyed too, with the key file). No compressing or sending with the pair dictionary.</li>
             <li>Opening picks the right dictionary automatically from the lineage and generation stamped on the pack. <b>Growing never breaks old packs</b> — old generations stay in the vault.</li>
           </ol>
